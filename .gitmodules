@@ -1,0 +1,6 @@
+[submodule "nostr"]
+	path = nostr
+	url = https://github.com/albidev/python-nostr
+[submodule "electrum"]
+	path = electrum
+	url = https://github.com/albidev/electrum

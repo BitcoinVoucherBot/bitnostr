@@ -1,0 +1,53 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.ACCESS_TOKEN }}
+
+    - name: Install Docker
+      run: |
+        sudo apt-get remove moby-containerd
+        sudo apt-get remove moby-runc
+        sudo apt-get update
+        sudo apt-get install -y docker.io
+        sudo apt-get install -y docker-compose
+
+    - name: Login to Remote Server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}
+
+    - name: Clone Docker Compose Files
+      run: git clone --recurse-submodules https://albidev:${{ secrets.ACCESS_TOKEN }}@github.com/BitcoinVoucherBot/bitnostr.git
+
+    - name: Build Docker Compose
+      run: |
+        cd bitnostr
+        docker-compose build
+
+    - name: Push Docker Compose to Remote Server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSHKEY }}
+        passphrase: ${{ secrets.PASSPHRASE }}
+        source: bitnostr/
+        target: /home/${{ secrets.USERNAME }}/
+
+
+
+

@@ -1,0 +1,58 @@
+version: '3.4'
+
+services:
+  bitcoinvoucherbot:
+    environment: 
+      - production
+    image: bitcoinvoucherbot
+    container_name: bitcoinvoucherbot
+    volumes:
+      - ${PWD}/settings.json:/app/settings.json
+    networks:
+      - app
+    depends_on:
+      - flask
+    build:
+      context: .
+      dockerfile: ./Dockerfile.bot
+    links:
+      - redis
+    restart: on-failure
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+  redis:
+    image: redis:5.0.12
+    container_name: redis
+    networks:
+      - app
+    command: redis-server /usr/local/etc/redis/redis.conf
+    restart: on-failure
+    volumes:
+      - ${PWD}/data:/data
+      - ${PWD}/redisconf:/usr/local/etc/redis
+  flask:
+    environment: 
+        - production
+    image: flask
+    container_name: flask
+    ports:
+      - 8080:8080
+    networks:
+      - app
+    build:
+      context: .
+      dockerfile: Dockerfile.flask
+    depends_on:
+      - redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+
+networks:
+  app:
+    name: app

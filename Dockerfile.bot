@@ -1,0 +1,27 @@
+# For more information, please refer to https://aka.ms/vscode-docker-python
+FROM python:3.9.16-bullseye
+RUN apt-get -y update && apt-get install
+
+ENV ENV='production'
+
+# installing the redis-cli
+RUN apt-get update && \
+    apt-get -y install redis-tools libsecp256k1-0
+
+# Install pip requirements
+ADD requirements.txt .
+RUN pip install -r requirements.txt
+WORKDIR /app
+COPY . /app
+USER root
+WORKDIR /app
+
+# Redirect logs to stdout
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONIOENCODING=UTF-8
+ENV PYTHONFAULTHANDLER=1
+ENV PYTHONHASHSEED=random
+ENV PYTHONPATH=/app
+ENV PYTHONBUFFERED=1
+
+CMD ["python", "main.py"]

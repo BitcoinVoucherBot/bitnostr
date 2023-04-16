@@ -1,0 +1,30 @@
+Requests==2.28.1
+Reachability==0.1.4
+Bech32==1.2.0
+Secp256k1==0.14.0
+Cffi==1.15.0
+Cryptography==37.0.4
+Pycparser==2.21
+Python-socks==2.1.1
+Websocket-client==1.5.1
+Flask==2.2.2
+Flask-HttpAuth==4.7.0
+Redis==4.5.1
+Gunicorn==20.1.0
+Docker==6.0.1
+Schwifty==2023.2.1
+Python-bitcoinlib==0.12.0
+
+Qrcode
+Protobuf>=3.20,<4
+Qdarkstyle>=2.7
+Aiorpcx>=0.22.0,<0.23
+Aiohttp>=3.3.0,<4.0.0
+Aiohttp_socks>=0.3
+Certifi
+Bitstring
+Attrs>=19.2.0
+
+# Note that we also need the dnspython[DNSSEC] extra which pulls in cryptography,
+# but as that is not pure-python it cannot be listed in this file!
+Dnspython>=2.0
