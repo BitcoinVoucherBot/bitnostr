@@ -20,7 +20,6 @@ class API:
 
     def create_lightning_order(self, amount, email, iban, user_public_key, lnaddress=None) -> Order:
 
-         #1=nostr pub, #2=lnaddress
         recipient_type = 1 if lnaddress is None else 2 
         recipient = user_public_key if lnaddress is None else lnaddress
 
@@ -30,7 +29,7 @@ class API:
         payload = {
             "event": "order.create",
             "payload": {
-                'op_type': 'LA-D', # LA = Lightning Address - D = Denali
+                'op_type': 'LA-D',
                 'currency' : 'EUR',
                 'email' : email,
                 'iban' : iban,

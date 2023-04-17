@@ -90,13 +90,6 @@ class Bot(NostrCoreBot):
                         self.show_purchase(event, command=command, type=OrderType.LIGHTNING)
                     elif command == "swap":
                         self.show_purchase(event, command=command, type=OrderType.ON_CHAIN)
-                        # if command == "purchase":
-                            # self.show_tiers(event, command)
-                        # else:
-                        #     amount = command.split(" ")[1]
-                        #     if self.is_amount_valid(event, amount):
-                        #         self.set_command(event, "purchase")
-                        #         self.show_amount_confirmation(event, amount, show_proceed=True)
                     elif command == "continue":
                         self.show_proceed(event)
                     elif command == "proceed":
@@ -682,10 +675,8 @@ class Bot(NostrCoreBot):
             payload_json = json.loads(payload)['payload']
             orderid = payload_json['orderid']
             public_key = payload_json['public_key']
-            # authcode = payload_json['authcode'] # re-enable this if needed.
             public_key_hex = PublicKey.from_npub(public_key).hex()
-            if public_key and orderid: # and authcode:
-                # message = f"⚠️ Action required\n\nPlease contact support at https://t.me/VoucherSupportBot on Telegram.\n\nYour order nr.\n{orderid}\n\nYour publick key is:\n{public_key}\n\nAuthcode:\n{authcode}\n\nSome detail is necessary in order to process your order. Please act as soon as possible.\n\nThank you!"
+            if public_key and orderid:
                 message = f"⚠️ Action required\n\nPlease contact support at https://t.me/VoucherSupportBot on Telegram.\n\nYour order nr.\n{orderid}\n\nYour publick key is:\n{public_key}\n\nSome detail is necessary in order to process your order. Please act as soon as possible.\n\nThank you!"
                 self.send_message(recipient_pubkey=public_key_hex, cleartext_content=message)
                 time.sleep(1)
