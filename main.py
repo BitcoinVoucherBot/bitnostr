@@ -22,12 +22,7 @@ def start_bot():
     
     try:
         relays = None
-        # if utils.is_running_in_docker():
-        #     relays = Utils.get_online_relays()
-            
         nb.connect_relays(relays=relays)
-        # print("RELAYS CONNECTED")
-        # nb.subscribe_to_direct_messages()
 
         while True:
             nb.update()
