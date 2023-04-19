@@ -55,7 +55,7 @@ docker compose up -d --build
 * [Damus (iOS)](https://damus.io)
 * [Amethyst (Android)](https://play.google.com/store/apps/details?id=com.vitorpamplona.amethyst)
 
-## 📖 HOWTO
+## 📖 USER GUIDE
 
 For a complete user's guide on how to use the BitcoinVoucherBot, please check out our [step-by-step guide](./HOWTO.md).
 ## 💼 License

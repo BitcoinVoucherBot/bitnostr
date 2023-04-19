@@ -1,4 +1,4 @@
-# BitcoinVoucherBot: A step-by-step guide
+# 📖 BitcoinVoucherBot: A step-by-step guide
 
 A user-friendly, privacy-focused BitcoinVoucherBot that runs on the Nostr protocol. Follow these simple steps to start swapping your Bitcoin with enhanced privacy and security:
 
