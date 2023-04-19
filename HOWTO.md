@@ -36,7 +36,7 @@ Both procedures are non-custodial.
 Follow these steps for `/push` (to Lightning Address):
 
 1. Type `/push` to start the process.
-2. Select the desired amount (e.g., `/54`; limit: 50 - 200.
+2. Select the desired amount (e.g., `/54`; limit: 50 - 200).
 3. Continue with `/continue` and verify the order details.
 4. Make a wire transfer to the provided bank IBAN.
 5. Notify the bot with `/notify` once the payment is done.
