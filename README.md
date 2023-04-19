@@ -43,15 +43,21 @@ After activation, you will be provided by:
 
 ```bash
 git clone https://github.com/BitcoinVoucherBot/bitnostr.git
+cd bitnostr
 ```
 
-3. Rename ```settings.tpl.json``` into ```settings.json``` and fill missing required fields :
+3. Rename ```settings.tpl.json``` into ```settings.json```:
+
+```bash
+mv settings.tpl.json settings.json
+```
+4. Fill missing required fields:
     * ```nostr_private_key```: Your Nostr bot private key
     * ```nostr_public_key```: Your Nostr bot public key
     * ```bvb_api_key```: Your BitcoinVoucherBot API key 
     * ```bot_api_key```: Your Bot API key
 
-4. Run the docker compose
+5. Run the docker compose
 
 ```bash
 docker compose up -d --build
