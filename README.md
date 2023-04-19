@@ -71,6 +71,8 @@ This Bot running on Nostr protocol which is in an early stage of development.
 
 We welcome your feedback and suggestions! If you have any questions or need assistance, please feel free to create an issue, add PRs, or provide any feedback!
 
+## 🤙 Contact on Nostr
+
 [albi ⚡️](https://snort.social/p/npub1zy79gha2cfztu0use9qyu6cfp0h3kjr9sxdu6svurkdm68w2xzfqh7h3k3) - npub1zy79gha2cfztu0use9qyu6cfp0h3kjr9sxdu6svurkdm68w2xzfqh7h3k3</br>
 [massmux](https://snort.social/p/npub1sej07d37lnfk592wlh9uv2dy68jv2y0ez98p6dw7w0llx89hswesvs5fqm) - npub1sej07d37lnfk592wlh9uv2dy68jv2y0ez98p6dw7w0llx89hswesvs5fqm
 
