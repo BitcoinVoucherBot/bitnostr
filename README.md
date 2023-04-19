@@ -21,7 +21,23 @@ In order to run this container you'll need docker installed.
 
 ## 👨‍💻 Usage
 
-1. Request a [BitcoinVoucherBot API key and BOT API key](https://t.me/BitcoinVoucherGroup)
+1. Activate a connection to the change provider
+
+You can run the system on your VPS. In order to connect to the exchange provider, please contact the team at:
+
+[bitcoinvoucherteam@nostr.red](https://snort.social/p/npub15hmupf99kr4dua7zc458utg2kvnqkhx8wm3ljy8sz6v4f8jxfdtqqxht55) - npub15hmupf99kr4dua7zc458utg2kvnqkhx8wm3ljy8sz6v4f8jxfdtqqxht55
+
+You need:
+
+- connection IP of your machine, to be allowed to connect to API
+- a key of yours in UUID4 format, that will be used by the provider to send webhooks
+
+After activation, you will be provided by:
+
+- API key (needed to make calls to the system)
+- API docs
+
+<!-- 1. Request a [BitcoinVoucherBot API key and BOT API key](https://t.me/BitcoinVoucherGroup) -->
 
 2. Chekout the code from GitHub
 
@@ -58,27 +74,10 @@ docker compose up -d --build
 ## 📖 USER GUIDE
 
 For a complete user's guide on how to use the BitcoinVoucherBot, please check out our [step-by-step guide](./HOWTO.md).
+
 ## 💼 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-
-## Activate a connection to the change provider
-
-You can run the system on your VPS. In order to connect to the exchange provider, please contact the team at:
-
-npub15hmupf99kr4dua7zc458utg2kvnqkhx8wm3ljy8sz6v4f8jxfdtqqxht55
-bitcoinvoucherteam@nostr.red (NIP-05)
-
-You need:
-
-- connection IP of your machine, to be allowed to connect to API
-- a key of yours in UUID4 format, that will be used by the provider to send webhooks
-
-After activation, you will be provided by:
-
-- API key (needed to make calls to the system)
-- API docs
-
 
 ## ⚠️ Disclaimer
 
