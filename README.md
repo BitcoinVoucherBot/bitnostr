@@ -2,14 +2,14 @@
 
 # ⚡️🔗 BitcoinVoucherBot
 
-Welcome to the BitcoinVoucherBot repository! We're excited to share our user-friendly, privacy-focused tool that simplifies the process of swapping your Bitcoin. Built on the innovative [Nostr](https://github.com/nostr-protocol/nostr.) protocol, our bot offers an exceptional experience while keeping your transactions secure.
+Welcome to the BitcoinVoucherBot repository! We're excited to share our user-friendly, privacy-focused tool that simplifies the process of swapping your Bitcoin. Built on the innovative [Nostr](https://github.com/nostr-protocol/nostr) protocol, our bot offers an exceptional experience while keeping your transactions secure.
 
 ## 🌟 Key Features
 - Intuitive commands for a seamless user experience.
 - Push Sats to your Lightning Address or swap Bitcoin to your on-chain address.
 - Detailed step-by-step guidance throughout the swapping process.
 - Strong focus on privacy with encrypted and decentralized architecture.
-- Compatible with a variety of [Nostr](https://github.com/nostr-protocol/nostr.) clients.
+- Compatible with a variety of [Nostr](https://github.com/nostr-protocol/nostr) clients.
 
 ## 📚 Prerequisities
 
