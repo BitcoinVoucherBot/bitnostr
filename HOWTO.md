@@ -1,6 +1,6 @@
 # 📖 BitcoinVoucherBot: A step-by-step guide
 
-A user-friendly, privacy-focused BitcoinVoucherBot that runs on the Nostr protocol. Follow these simple steps to start swapping your Bitcoin with enhanced privacy and security:
+A user-friendly, privacy-focused, decentralized BitcoinVoucherBot's interface that runs on the Nostr protocol as a Direct messages Bot. Communication between the Nostr bot and the user is E2E encrypted (please see NIP-04). Follow these simple steps to start swapping your Bitcoin with enhanced privacy and security:
 
 ## Table of Contents
 - [Getting Started](#getting-started)
@@ -17,24 +17,26 @@ A user-friendly, privacy-focused BitcoinVoucherBot that runs on the Nostr protoc
 1. Type `/start` to kick off a new procedure with the bot.
 
 ## Setting Your Email
-2. Use the `/email` command to provide your email address for notifications and updates.
+2. Use the `/email` command to provide your email address for notifications in case of need. Please note that otherwise no email is sent.
 
 ## Registering Your IBAN
-3. Enter your bank account's IBAN using the `/iban` command.
+3. Enter your bank account's IBAN using the `/iban` command. This is needed by target bank during the process to match the incoming payment.
 
 ## Checking Your Details
 4. Use `/info` to view your current email, IBAN, and other details.
 
 ## Choosing Your Action
 5. Choose between `/push` or `/swap`:
-   - `/push`: Start the procedure to push Sats to your Lightning Address.
-   - `/swap`: Begin the process of pushing Bitcoin to your on-chain address.
+   - `/push`: Start the procedure to push Sats to your Lightning Address (as defined in your Nostr profile).
+   - `/swap`: Begin the process of pushing Bitcoin to your external on-chain address.
+
+Both procedures are non-custodial.
 
 ## Push Procedure
-Follow these steps for `/push`:
+Follow these steps for `/push` (to Lightning Address):
 
 1. Type `/push` to start the process.
-2. Select the desired amount (e.g., `/54`; limit: 50 - 200).
+2. Select the desired amount (e.g., `/54`; limit: 50 - 200.
 3. Continue with `/continue` and verify the order details.
 4. Make a wire transfer to the provided bank IBAN.
 5. Notify the bot with `/notify` once the payment is done.
