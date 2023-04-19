@@ -2,25 +2,31 @@
 
 # ⚡️🔗 BitcoinVoucherBot
 
-BitcoinVoucherBot [Nostr](https://github.com/nostr-protocol/nostr.) frontend.
-</br>Encrypted decentralized Bot running on [Nostr](https://github.com/nostr-protocol/nostr.)
+Welcome to the BitcoinVoucherBot repository! We're excited to share our user-friendly, privacy-focused tool that simplifies the process of swapping your Bitcoin. Built on the innovative [Nostr](https://github.com/nostr-protocol/nostr.) protocol, our bot offers an exceptional experience while keeping your transactions secure.
 
-## Prerequisities
+## 🌟 Key Features
+- Intuitive commands for a seamless user experience.
+- Push Sats to your Lightning Address or swap Bitcoin to your on-chain address.
+- Detailed step-by-step guidance throughout the swapping process.
+- Strong focus on privacy with encrypted and decentralized architecture.
+- Compatible with a variety of [Nostr](https://github.com/nostr-protocol/nostr.) clients.
+
+## 📚 Prerequisities
 
 In order to run this container you'll need docker installed.
 
 * [Windows](https://docs.docker.com/windows/started)
-* [OS X](https://docs.docker.com/mac/started/)
+* [OSX](https://docs.docker.com/mac/started/)
 * [Linux](https://docs.docker.com/linux/started/)
 
-## Usage
+## 👨‍💻 Usage
 
 1. Request a [BitcoinVoucherBot API key and BOT API key](https://t.me/BitcoinVoucherGroup)
 
 2. Chekout the code from GitHub
 
 ```bash
-git clone https://github.com/albidev/bvb.git
+git clone https://github.com/BitcoinVoucherBot/bitnostr.git
 ```
 
 3. Rename ```settings.tpl.json``` into ```settings.json``` and fill missing required fields :
@@ -35,13 +41,13 @@ git clone https://github.com/albidev/bvb.git
 docker compose up -d --build
 ```
 
-## Implemented NIPs (Nostr Implementation Possibilities)
+## 🔍 Implemented NIPs (Nostr Implementation Possibilities)
 
 * [NIP-01: Basic protocol flow description](https://github.com/nostr-protocol/nips/blob/master/01.md)
 * [NIP-04: Encrypted Direct Message](https://github.com/nostr-protocol/nips/blob/master/04.md)
 * [NIP-05: Mapping Nostr keys to DNS-based internet identifiers](https://github.com/nostr-protocol/nips/blob/master/05.md)
 
-## Tested clients
+## ✅ Tested clients
 
 * [Snort](https://snort.social)
 * [Iris](https://iris.to)
@@ -49,18 +55,18 @@ docker compose up -d --build
 * [Damus (iOS)](https://damus.io)
 * [Amethyst (Android)](https://play.google.com/store/apps/details?id=com.vitorpamplona.amethyst)
 
-## HOWTO
+## 📖 HOWTO
 
-[A step-by-step guide ](HOWTO.md)
-## License
+For a complete user's guide on how to use the BitcoinVoucherBot, please check out our [step-by-step guide](./HOWTO.md).
+## 💼 License
 
-[MIT](LICENSE)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
-## Disclaimer
+## ⚠️ Disclaimer
 
 This Bot running on Nostr protocol which is in an early stage of development.
 
 * It might have some bugs.
-* I need to add more tests.
+* It need more tests.
 
-Please feel free to add issues, add PRs, or provide any feedback!
+We welcome your feedback and suggestions! If you have any questions or need assistance, please feel free to create an issue, add PRs, or provide any feedback!
