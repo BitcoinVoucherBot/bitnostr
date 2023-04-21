@@ -14,7 +14,7 @@ A user-friendly, privacy-focused, decentralized BitcoinVoucherBot's interface th
 - [Additional Commands](#additional-commands)
 
 ## Getting Started
-1. Type `/start` to kick off a new procedure with the bot.
+1. Open DM and type `/start` to kick off a new procedure with the bot.
 
 ## Setting Your Email
 2. Use the `/email` command to provide your email address for notifications in case of need. Please note that otherwise no email is sent.
