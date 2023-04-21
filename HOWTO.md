@@ -14,19 +14,22 @@ A user-friendly, privacy-focused, decentralized BitcoinVoucherBot's interface th
 - [Additional Commands](#additional-commands)
 
 ## Getting Started
-1. Open DM and type `/start` to kick off a new procedure with the bot.
+
+1. Search for `npub1fwcucd29vzleqlu8zjrs7dxpmurujgrk3yu2vtq6usx4wfspxjeqyw5089` in a Nostr client.
+
+2. Open DM and type `/start` to kick off a new procedure with the bot.
 
 ## Setting Your Email
-2. Use the `/email` command to provide your email address for notifications in case of need. Please note that otherwise no email is sent.
+3. Use the `/email` command to provide your email address for notifications in case of need. Please note that otherwise no email is sent.
 
 ## Registering Your IBAN
-3. Enter your bank account's IBAN using the `/iban` command. This is needed by target bank during the process to match the incoming payment.
+4. Enter your bank account's IBAN using the `/iban` command. This is needed by target bank during the process to match the incoming payment.
 
 ## Checking Your Details
-4. Use `/info` to view your current email, IBAN, and other details.
+5. Use `/info` to view your current email, IBAN, and other details.
 
 ## Choosing Your Action
-5. Choose between `/push` or `/swap`:
+6. Choose between `/push` or `/swap`:
    - `/push`: Start the procedure to push Sats to your Lightning Address (as defined in your Nostr profile).
    - `/swap`: Begin the process of pushing Bitcoin to your external on-chain address.
 
