@@ -8,7 +8,8 @@ class App extends Component {
     this.state = {
       settings: null,
       status: 'RUNNING',
-      connected: []
+      connected: [],
+      editable: false
     };
   }
 
@@ -166,82 +167,97 @@ class App extends Component {
     }
   }
 
+  checkIfRelayIsConnected = (relay) => {
+    const relays = this.state.connected;
+    if (relays.includes(relay)) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
-    const { settings, status, connected } = this.state;
+    const { settings, status, editable } = this.state;
     return (
-      <div>
-        <h1>BitcoinVoucherBot - Nostr</h1>
-        <h2>Info</h2>
-        { status && connected ? (
-          <div className='status'>
-            <div className='status-item'>
-              <label htmlFor='status'>Status</label>
-              <input className='status-input' id='status' value={status} readOnly />
+      <div className="container">
+         <div className="background-image"></div>
+         <div className="content">
+          <h1>BitcoinVoucherBot - Nostr</h1>
+          { settings && status && settings.relays ? (
+            <div className='status-container'>
+              <div className='status-item'>
+                <span className='status' id='status' status={status}>{status}</span>
+              </div>
+              <div className='status-item'>
+                {/* <label htmlFor='connected'>Connected Relays</label> */}
+                {Object.entries(settings.relays).map(([key, value]) => (
+                  <div key={key}>
+                  <span className='connected-relay' id={key} {... (this.checkIfRelayIsConnected(value) ? {'data-connected': true} : {})}>{value}</span>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className='status-item'>
-              <label htmlFor='connected'>Connected Relays</label>
-              {Object.entries(connected).map(([key, value]) => (
-                <div key={key}>
-                  <input className='status-input' id={key} value={value} readOnly />
+          ) : (
+            <p>Loading...</p>
+          )}
+          <h2>Settings</h2>
+          {settings ? (
+            <div className='settings'>
+              {Object.entries(settings).map(([key, value]) => (
+                <div className="settings-item" key={key}>
+                  <label htmlFor={key}>{key}</label>
+                  {Array.isArray(value) ? (
+                    value.map((item, index) => (
+                      <div key={`${key}-${index}`}>
+                        <input
+                          className='settings-input-list'
+                          id={`${key}-${index}`}
+                          value={item}
+                          readOnly
+                          disabled
+                        />
+                        <button className="remove-btn" onClick={() => this.removeItem(key, index)}><i className="material-icons">delete</i></button>
+                      </div>
+                    ))
+                  ) : (
+                    <div key={key}>
+                      <input 
+                        className='settings-input' 
+                        id={key} value={value} 
+                        {... (editable ? {} : {readOnly: true, disabled: true})}
+                        />
+                    </div>
+                  )}
+                  {Array.isArray(value) ? (
+                    <div key={`${key}-new`}>
+                      <input
+                        className='settings-input-new'
+                        id={`${key}-new`}
+                        value={this.state[key + '-new'] || ''}
+                        onChange={this.handleChange}
+                        placeholder="New item"
+                      />
+                      <button className='add-btn' onClick={() => this.addItem(key)}><i className="material-icons">add</i></button>
+                    </div>
+                  ) : null}
                 </div>
               ))}
             </div>
-          </div>
-        ) : (
-          <p>Loading...</p>
-        )}
-        <h2>Settings</h2>
-        {settings ? (
-          <div className='settings'>
-            {Object.entries(settings).map(([key, value]) => (
-              <div key={key}>
-                <label htmlFor={key}>{key}</label>
-                {Array.isArray(value) ? (
-                  value.map((item, index) => (
-                    <div key={`${key}-${index}`}>
-                      <input
-                        className='settings-input-list'
-                        id={`${key}-${index}`}
-                        value={item}
-                        readOnly
-                      />
-                      <button onClick={() => this.removeItem(key, index)}>Remove</button>
-                    </div>
-                  ))
-                ) : (
-                  <div key={key}>
-                    <input className='settings-input' id={key} value={value} readOnly />
-                  </div>
-                )}
-                {Array.isArray(value) ? (
-                  <div key={`${key}-new`}>
-                    <input
-                      className='settings-input-new'
-                      id={`${key}-new`}
-                      value={this.state[key + '-new'] || ''}
-                      onChange={this.handleChange}
-                    />
-                    <button onClick={() => this.addItem(key)}>Add</button>
-                  </div>
-                ) : null}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p>Loading...</p>
-        )}
-        <div>
-          <button onClick={this.updateSettings}>Update settings</button>
-        </div>
-        {status === 'RUNNING' ? (
+          ) : (
+            <p>Loading...</p>
+          )}
           <div>
-            <button onClick={this.stopBot}>Stop bot</button>
+            <button onClick={this.updateSettings}>Update settings</button>
           </div>
-        ) : (
-          <div>
-            <button onClick={this.startBot}>Start bot</button>
-          </div>
-        )}
+          {status === 'RUNNING' ? (
+            <div>
+              <button onClick={this.stopBot}>Stop bot</button>
+            </div>
+          ) : (
+            <div>
+              <button onClick={this.startBot}>Start bot</button>
+            </div>
+          )}
+         </div>
       </div>
     );
   }
