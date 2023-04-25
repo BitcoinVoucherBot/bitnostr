@@ -53,6 +53,16 @@ services:
         max-size: "50m"
         max-file: "3"
 
+  dashboard:
+    container_name: dashboard
+    build:
+      context: './dashboard'
+      dockerfile: Dockerfile.dashboard
+    ports:
+      - "80:80"
+    depends_on:
+      - flask
+
 networks:
   app:
     name: app

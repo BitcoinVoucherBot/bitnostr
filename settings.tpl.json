@@ -10,7 +10,7 @@
         "wss://relay.snort.social"
     ],
     "last_message_created_at": 0,
-    "bvb_api_key": "<BOT_API_KEY>",
+    "bvb_api_key": "<BVB_API_KEY>",
     "lightning_tiers": [
         50,
         200

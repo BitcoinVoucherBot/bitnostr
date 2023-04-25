@@ -91,6 +91,27 @@ class Settings:
     def message_to_sign(self) -> str:
         return self._settings.get(Settings.MESSAGE_TO_SIGN)
 
+    def has_valid_values(self) -> (bool, str):
+        ret = True
+        message = ""
+        if self._settings.get(Settings.PRIVATE_KEY) == "<NOSTR_PRIVATE_KEY>":
+            ret = False
+            message += "Please set your NOSTR_PRIVATE_KEY in settings.json\n"
+        if self._settings.get(Settings.PUBLIC_KEY) == "<NOSTR_PUBLIC_KEY>":
+            ret = False
+            message += "Please set your NOSTR_PUBLIC_KEY in settings.json\n"
+        if self._settings.get(Settings.BVB_API_KEY) == "<BVB_API_KEY>":
+            ret = False
+            message += "Please set your BVB_API_KEY in settings.json\n"
+        if self._settings.get(Settings.BVB_API_KEY) == "<BOT_API_KEY>":
+            ret = False
+            message += "Please set your BOT_API_KEY in settings.json\n"
+        if "<ADMIN_ID>" in self._settings.get(Settings.ADMINS):
+            ret = False
+            message += "Please set your ADMIN_ID in settings.json\n"
+            
+        return ret, message
+
     def set_last_message_created_at(self, message_created_at: int):
         self._settings[Settings.LAST_MESSAGE_CREATED_AT] = message_created_at
         self.save()
@@ -104,5 +125,24 @@ class Settings:
         self.save()
 
     def save(self):
-        with open("settings.json", "w") as f:
-            json.dump(self._settings, f, indent=4)
+        with open("settings.json", "r") as f:
+            new_settings = json.load(f)
+            # verify if params are changed and update only changed params
+            for key, value in self._settings.items():
+                if new_settings.get(key) != value:
+                    new_settings[key] = value
+            self._settings = new_settings
+            # save
+            with open("settings.json", "w") as f:
+                json.dump(self._settings, f, indent=4)
+
+    def get(self):
+        return self._settings
+    
+    def set(self, settings: dict):
+        self._settings = settings
+        self.save()
+
+    def reload(self):
+        with open("settings.json", "r") as f:
+            self._settings = json.load(f)

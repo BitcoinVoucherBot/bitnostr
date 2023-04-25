@@ -3,13 +3,16 @@
 import redis, json
 from src.settings import Settings
 from src.utils import Utils
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 from flask_httpauth import HTTPBasicAuth
 from functools import wraps
 from main import redis_host, r, settings
 
 utils = Utils()
-server = Flask(__name__)
+server = Flask(__name__, static_folder='dashboard/public', template_folder='dashboard/public')
+CORS(server)
+
 auth = HTTPBasicAuth()
 settings = Settings()
 r = redis.Redis(host=redis_host, port=6379, db=0)
@@ -26,6 +29,15 @@ def token_required(f):
         if token != settings.bot_api_key:
             return jsonify({'success':False, 'message': 'Token is invalid!'}), 403
         return f(*args, **kwargs)
+    return decorated
+
+def localhost_only(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if request.remote_addr == "127.0.0.1":
+            return f(*args, **kwargs)
+        else:
+            return jsonify({'error': 'Access denied'}), 403
     return decorated
 
 @server.route('/order/complete', methods=['POST'])
@@ -82,6 +94,48 @@ def get_orders():
     orders = r.lrange(f"{pub_key}:orders", 0, -1)
     orders = [order.decode('utf-8') for order in orders]
     return jsonify({'success':True, 'orders': orders}), 200
+
+@server.route('/bot/settings', methods=['GET', 'POST'])
+@localhost_only
+def handle_settings():
+    if request.method == 'GET':
+        jsonSettings = json.dumps(settings.get())
+        ret = jsonify({'success':True, 'settings': jsonSettings}), 200
+        return ret
+    else:
+        data = request.get_json()
+        if not data:
+            return jsonify({'success':False, 'message': 'Invalid request body'}), 400
+        settings.set(data)
+        return jsonify({'success':True}), 200
+
+@server.route('/bot/start', methods=['POST'])
+# @localhost_only
+def start():
+    r.publish('start_bot', '')
+    return jsonify({'success':True, 'status': 'RUNNING'}), 200
+
+@server.route('/bot/stop', methods=['POST'])
+# @localhost_only
+def stop():
+    r.publish('stop_bot', '')
+    return jsonify({'success':True, 'status': 'STOPPED'}), 200
+
+@server.route('/info', methods=['GET'])
+@localhost_only
+def info():
+    status = r.get('status')
+    status = status.decode('utf-8') if status else 'STOPPED'
+    info = {
+        'status': status,
+        'connected': []
+    }
+    if status == 'RUNNING':
+        connected_relays = r.get('connected_relays')
+        if connected_relays:
+            connected_relays = json.loads(connected_relays.decode('utf-8'))
+            info['connected'] = connected_relays
+    return jsonify({'success':True, 'info': info}), 200
 
 @server.errorhandler(400)
 def bad_request(error):

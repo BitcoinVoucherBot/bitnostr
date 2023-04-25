@@ -19,6 +19,8 @@ pubsub = None
 
 def start_bot():
     print("Starting bot")
+    settings.reload()
+    print("Settings reloaded")
     
     try:
         relays = None
@@ -42,6 +44,8 @@ def subscribe_to_redis():
     pubsub = r.pubsub()
     pubsub.subscribe('order_complete')
     pubsub.subscribe('order_contact')
+    pubsub.subscribe('start_bot')
+    pubsub.subscribe('stop_bot')
 
     print("Subscribed to Redis: ", redis_host)
 
@@ -52,16 +56,34 @@ def subscribe_to_redis():
                 nb.order_complete(message['data'])
             elif channel == 'order_contact':
                 nb.order_contact(message['data'])
+            elif channel == 'start_bot':
+                start()
+            elif channel == 'stop_bot':
+                stop()
+
+def start():
+    nb.setup()
+    bot_thread = threading.Thread(target=start_bot)
+    bot_thread.start()
+
+def stop():
+    print("Stopping bot")
+    print("Attempting to disconnect")
+    nb.disconnect_relays()
+    print("Disconnected!")
     
 if __name__ == "__main__":
     # Global setting
     logging.basicConfig(level="ERROR")
 
-    bot_thread = threading.Thread(target=start_bot)
-    bot_thread.start()
-
     redis_thread = threading.Thread(target=subscribe_to_redis)
     redis_thread.start() 
+
+    settings_has_valid_values = settings.has_valid_values()
+    if settings_has_valid_values[0] == True:
+        start()
+    else:
+        print("ERROR - Invalid settings:\n\n", settings_has_valid_values[1])
 
     if not utils.is_running_in_docker():
         from wsgi import server as wsgi_server

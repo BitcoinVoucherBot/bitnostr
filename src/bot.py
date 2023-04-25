@@ -16,6 +16,9 @@ from nostr.nostr.key import PublicKey
 
 class Bot(NostrCoreBot):
 
+        status = "STOPPED"
+        connected_relays = set()
+
         settings = Settings()
 
         commands = {}
@@ -37,6 +40,27 @@ class Bot(NostrCoreBot):
 
         def __init__(self):
             super().__init__()
+
+        def on_relay_open(self, url):
+            super().on_relay_open(url)
+            self.connected_relays.add(url)
+            self.redis.set('status', 'RUNNING')
+            self.redis.set('connected_relays', json.dumps(list(self.connected_relays)))
+        
+        def on_relay_close(self, url):
+            super().on_relay_close(url)
+            self.connected_relays.remove(url)
+            self.redis.set('status', 'STOPPED')
+            self.redis.set('connected_relays', json.dumps(list(self.connected_relays)))
+
+        def disconnect_relays(self):
+            for relay in set(self.connected_relays):
+                self.relay_manager.remove_relay(relay)
+            self.connected_relays = set()        
+            self.relay_manager.relays = []
+            self.relay_manager.stop_threads = True
+            self.redis.delete('connected_relays')
+            self.redis.set('status', 'STOPPED')
 
         def process_metadata(self, event, metadata):
             created_at = metadata['created_at']

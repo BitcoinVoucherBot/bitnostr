@@ -29,12 +29,18 @@ class NostrCoreBot:
         
         self.ssl_options = {"cert_reqs": ssl.CERT_NONE}
         self.settings = Settings()
+        self.setup()
+
+    def setup(self):
         self.relay_manager = RelayManager()
         self.relay_manager.on_relay_open = self.on_relay_open
 
     def on_relay_open(self, url):
         print(f"RELAY CONNECTED - {url}")
         self.subscribe_to_direct_messages(url=url)
+    
+    def on_relay_close(self, url):
+        print(f"RELAY DISCONNECTED - {url}")
     
     def update(self):
         messages = self.get_messages()
@@ -146,6 +152,7 @@ class NostrCoreBot:
             if relay not in relays_to_connect:
                 relays_to_connect.append(relay)
 
+        self.relay_manager.stop_threads = False
         for relay in relays_to_connect:
             self.relay_manager.add_relay(relay)
 
@@ -174,7 +181,7 @@ class NostrCoreBot:
         time.sleep(1) # allow the messages to send
     
     def disconnect_relays(self):
-        self.relay_manager.close_all_relay_connections()
+        pass   
 
     def get_profile(self, public_key: str):
         if 'npub' in public_key:
