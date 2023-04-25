@@ -35,12 +35,10 @@ label {
 
 .container {
   position: relative;
-  /* width: 400px; */
-  /* height: 300px; */
   overflow: hidden;
 }
 
-.content {
+.content {  
   position: relative;
   margin: 30px;
 }
@@ -74,33 +72,50 @@ label {
   position: relative;
 }
 
+input {
+  height: 40px;
+  padding: 0px 0px 0px 10px;
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid #ae47f4;
+  border-radius: 10px;
+}
+
 input[readOnly] {
   background-color: transparent;
   color: #fff;
   border: none;
-  border-bottom: 1px solid #ae47f4;
+  border-bottom: 2px solid #ae47f4;
   font-weight: normal;
   font-size: 15px !important;
   font-size: medium;
   margin-right: 12px;
-  width: 85%;
-  height: 40px;
-  padding: 0px 0px 0px 10px;
+  width: 100% !important;
+  border-radius: 0px;
+}
+
+.label-container {
+  margin-bottom: 10px;
+}
+
+.settings {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  padding: 10px;
 }
 
 .settings-input-new {
   background-color: transparent;
   color: #fff;
   border: none;
-  border: 1px solid #ae47f4;
+  border: 2px solid #ae47f4;
   font-weight: normal;
   font-size: 15px !important;
   font-size: medium;
   margin-right: 10px;
   height: 40px;
-  width: 85%;
-  margin-bottom: 40px;
-  margin-top: 20px;
+  width: 100%;
   border-radius: 10px;
   padding: 0px 0px 0px 10px;
 }
@@ -124,7 +139,7 @@ input[readOnly] {
   transition: background-color 0.3s;
 }
 
-.remove-btn:hover {
+.remove-btn:hover, .to_stop:hover {
   background-color: #d32f2f; /* Darken red background on hover */
 }
 
@@ -143,7 +158,7 @@ input[readOnly] {
   transition: background-color 0.3s;
 }
 
-.add-btn:hover {
+.add-btn:hover, .to_start:hover, .update-btn:hover {
   background-color: #3f8c4a; /* Darken green background on hover */
 }
 
@@ -153,22 +168,17 @@ input[readOnly] {
 }
 
 .settings-item {
+  margin-top: 20px;
   margin-bottom: 20px;
-  /* width: 100vh; */
   background-color: #0c0c0c;
   padding: 20px;
   margin: 10px;
-  width: 600px;
   position: relative;
   padding: 20px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(50px);
   border-radius: 10px;
 }
-
-/* .settings-item label {
-  border-bottom: 1px solid #ae47f4;
-} */
 
 .connected-relay {
   color: #fff !important;
@@ -193,4 +203,68 @@ input[readOnly] {
   content: "✓";
   margin-right: 5px;
   margin-left: 5px;
+}
+
+.button {
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+  background-color: transparent;
+  margin-top: 10px;
+}
+
+.to_start {
+  background-color: greenyellow;
+  color: white;
+}
+
+.to_stop {
+  background-color: #f44336;
+  color: white;
+}
+
+.edit-btn {
+  background-color: #4CAF50; /* Green background */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 2px;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.cancel-btn {
+  background-color: #f44336; /* Red background */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 2px;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.input-list-container {
+  display: flex;
+}
+
+.input-list-content {
+  flex-grow: 1; /* Allow the first div to grow and take up the remaining space */
+  padding: 10px;
+  text-align: center;
+}
+
+.remove-btn-content, .add-btn-content {
+  width: 60px;
+  padding: 10px;
+  text-align: center;
 }
