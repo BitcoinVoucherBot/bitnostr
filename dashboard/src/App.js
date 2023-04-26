@@ -10,13 +10,20 @@ class App extends Component {
       status: 'RUNNING',
       connected: [],
       editable: false,
-      secureInput: {}
+      secureInput: {},
+      loading: true
     };
+
+    setTimeout(() => {
+      this.fetchData();
+    }, 3000);
   }
 
-  componentDidMount() {
+  fetchData() {
     this.fetchSettings();
     this.fetchInfo();
+
+    this.setState({ loading: false });
 
     setInterval(() => {
       this.fetchInfo();
@@ -212,7 +219,7 @@ class App extends Component {
   }
 
   render() {
-    const { settings, status, editable } = this.state;
+    const { settings, status, editable, loading } = this.state;
     return (
       <div className="container">
          <div className="background-image"></div>
@@ -221,121 +228,125 @@ class App extends Component {
             <img className="header-logo" src="logo.png" />
             <h1 className="header-title">BitcoinVoucherBot</h1>
           </div>
-          { settings && status && settings.relays ? (
-            <div className='status-container'>
-              <div>
-                <div className='status-item'>
-                  <span className='status' id='status' status={status}>{status}</span>
-                </div>
-                <div className='relays-list'>
-                  {Object.entries(settings.relays).map(([key, value]) => (
-                    <div key={key} className="relay-item frosty">
-                    <span className='connected-relay' id={key} {... (this.checkIfRelayIsConnected(value) ? {'data-connected': true} : {})}>{value}</span>
-                    </div>
-                  ))}
-                </div>
-                {status === 'RUNNING' ? (
-                  <div>
-                    <button className="button to_stop" onClick={this.stopBot}>Stop bot</button>
-                  </div>
-                ) : (
-                  <div>
-                    <button className="button to_start" onClick={this.startBot}>Start bot</button>
-                  </div>
-                )}
+          { loading ? (
+            <div className="loading">
+              <div className="loading-text">Loading...</div>
               </div>
-            </div>
-          ) : (
-            <p>Loading...</p>
-          )}
-          <h2>Nostr Bot Settings</h2>
-          {settings ? (
-            <div>
+            ) : (
               <div>
-                { editable ? (
-                  <div>
-                    <button className="button cancel-btn" onClick={this.cancelEditSettings}>Cancel</button>
-                    <button className="button update-btn" onClick={this.updateSettings}>Save settings</button>
-                  </div>
-                ) : (
-                  <button className="button update-btn" onClick={this.editSettings}>Edit settings</button>
-                )}
-              </div>
-              <div className='settings'>
-              {Object.entries(settings).map(([key, value]) => (
-                <div className="settings-item frosty" key={key}>
-                  <div className="label-container">
-                    <label htmlFor={key}>{key}</label>
-                  </div>
-                  {Array.isArray(value) && editable ? (
-                    <div className="input-list-container" key={`${key}-new`}>
-                      <div className="input-list-content">
-                        <input
-                          className='settings-input-new'
-                          id={`${key}-new`}
-                          value={this.state[key + '-new'] || ''}
-                          onChange={(e) => this.handleInputNewChange(e)}
-                          placeholder="New item"
-                        />
+                { settings && status && settings.relays ? (
+                  <div className='status-container'>
+                    <div>
+                      <div className='status-item'>
+                        <span className='status' id='status' status={status}>{status}</span>
                       </div>
-                      <div className="add-btn-content">
-                        <button className='add-btn' onClick={() => this.addItem(key)}><i className="material-icons">add</i></button>
-                      </div>
-                    </div>
-                  ) : null}
-                  <div>
-                    {Array.isArray(value) ? (
-                      value.map((item, index) => (
-                        <div className="input-list-container" key={`${key}-${index}`}>
-                          <div className="input-list-content">
-                            <input
-                              className='settings-input-list'
-                              id={`${key}-${index}`}
-                              value={item}
-                              readOnly
-                              disabled
-                            />
+                      <div className='relays-list'>
+                        {Object.entries(settings.relays).map(([key, value]) => (
+                          <div key={key} className="relay-item frosty">
+                          <span className='connected-relay' id={key} {... (this.checkIfRelayIsConnected(value) ? {'data-connected': true} : {})}>{value}</span>
                           </div>
-                          {editable ? (
-                            <div className="remove-btn-content">
-                              <button className="remove-btn" onClick={() => this.removeItem(key, index)}><i className="material-icons">delete</i></button>
+                        ))}
+                      </div>
+                      {status === 'RUNNING' ? (
+                        <div>
+                          <button className="button to_stop" onClick={this.stopBot}>Stop bot</button>
+                        </div>
+                      ) : (
+                        <div>
+                          <button className="button to_start" onClick={this.startBot}>Start bot</button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ) : null}
+                {settings ? (
+                  <div>
+                    <h2>Nostr Bot Settings</h2>
+                    <div>
+                      { editable ? (
+                        <div>
+                          <button className="button cancel-btn" onClick={this.cancelEditSettings}>Cancel</button>
+                          <button className="button update-btn" onClick={this.updateSettings}>Save settings</button>
+                        </div>
+                      ) : (
+                        <button className="button update-btn" onClick={this.editSettings}>Edit settings</button>
+                      )}
+                    </div>
+                    <div className='settings'>
+                    {Object.entries(settings).map(([key, value]) => (
+                      <div className="settings-item frosty" key={key}>
+                        <div className="label-container">
+                          <label htmlFor={key}>{key}</label>
+                        </div>
+                        {Array.isArray(value) && editable ? (
+                          <div className="input-list-container" key={`${key}-new`}>
+                            <div className="input-list-content">
+                              <input
+                                className='settings-input-new'
+                                id={`${key}-new`}
+                                value={this.state[key + '-new'] || ''}
+                                onChange={(e) => this.handleInputNewChange(e)}
+                                placeholder="New item"
+                              />
                             </div>
-                          ) : null}
-                        </div>
-                      ))
-                    ) : (
-                      <div className="input-list-container" key={key}>
-                        <div className="input-list-content">
-                          <input 
-                            className='settings-input' 
-                            id={key} 
-                            value={value}
-                            type={editable || this.state.secureInput[key]  ? 'text' : 'password'}
-                            onChange={(e) => this.handleInputChange(e, key)} 
-                            {... (editable ? {} : {readOnly: true, disabled: true})}
-                            />
-                        </div>
-                          {!editable ? (
-                            <div className="remove-btn-content">
-                              <button 
-                              className="secureToggleButton" 
-                              onClick={() => this.toggleSecureInput(key)}
-                              {... (!this.state.secureInput[key] ? {'data-secure': true} : {})}
-                            > 
-                              <span className="material-icons">{!this.state.secureInput[key] ? 'visibility' : 'visibility_off'}</span>
-                            </button>
+                            <div className="add-btn-content">
+                              <button className='add-btn' onClick={() => this.addItem(key)}><i className="material-icons">add</i></button>
+                            </div>
                           </div>
-                          ) : null}
+                        ) : null}
+                        <div>
+                          {Array.isArray(value) ? (
+                            value.map((item, index) => (
+                              <div className="input-list-container" key={`${key}-${index}`}>
+                                <div className="input-list-content">
+                                  <input
+                                    className='settings-input-list'
+                                    id={`${key}-${index}`}
+                                    value={item}
+                                    readOnly
+                                    disabled
+                                  />
+                                </div>
+                                {editable ? (
+                                  <div className="remove-btn-content">
+                                    <button className="remove-btn" onClick={() => this.removeItem(key, index)}><i className="material-icons">delete</i></button>
+                                  </div>
+                                ) : null}
+                              </div>
+                            ))
+                          ) : (
+                            <div className="input-list-container" key={key}>
+                              <div className="input-list-content">
+                                <input 
+                                  className='settings-input' 
+                                  id={key} 
+                                  value={value}
+                                  type={editable || this.state.secureInput[key]  ? 'text' : 'password'}
+                                  onChange={(e) => this.handleInputChange(e, key)} 
+                                  {... (editable ? {} : {readOnly: true, disabled: true})}
+                                  />
+                              </div>
+                                {!editable ? (
+                                  <div className="remove-btn-content">
+                                    <button 
+                                    className="secureToggleButton" 
+                                    onClick={() => this.toggleSecureInput(key)}
+                                    {... (!this.state.secureInput[key] ? {'data-secure': true} : {})}
+                                  > 
+                                    <span className="material-icons">{!this.state.secureInput[key] ? 'visibility' : 'visibility_off'}</span>
+                                  </button>
+                                </div>
+                                ) : null}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    )}
+                    ))}
                   </div>
-                </div>
-              ))}
-            </div>
-            </div>
-          ) : (
-            <p>Loading...</p>
-          )}
+                  </div>
+                ) : null }
+              </div>
+            )}
          </div>
       </div>
     );

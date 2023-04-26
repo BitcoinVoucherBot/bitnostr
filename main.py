@@ -74,7 +74,7 @@ def stop():
     
 if __name__ == "__main__":
     # Global setting
-    logging.basicConfig(level="ERROR")
+    logging.basicConfig(level="FATAL")
 
     redis_thread = threading.Thread(target=subscribe_to_redis)
     redis_thread.start() 
