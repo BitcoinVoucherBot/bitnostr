@@ -112,6 +112,9 @@ def handle_settings():
 @server.route('/bot/start', methods=['POST'])
 # @localhost_only
 def start():
+    ret = settings.has_valid_values()
+    if not ret[0]:
+        return jsonify({'success':False, 'status': 'STOPPED', 'message': ret[1]}), 200
     r.publish('start_bot', '')
     return jsonify({'success':True, 'status': 'RUNNING'}), 200
 

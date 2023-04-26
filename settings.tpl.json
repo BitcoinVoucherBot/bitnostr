@@ -2,13 +2,6 @@
     "enabled": true,
     "nostr_private_key": "<NOSTR_PRIVATE_KEY>",
     "nostr_public_key": "<NOSTR_PUBLIC_KEY>",
-    "relays": [
-        "wss://nostr.massmux.com",
-        "wss://relay.damus.io",
-        "wss://nostr-pub.wellorder.net",
-        "wss://relay.nostr.info",
-        "wss://relay.snort.social"
-    ],
     "last_message_created_at": 0,
     "bvb_api_key": "<BVB_API_KEY>",
     "lightning_tiers": [
@@ -27,6 +20,13 @@
     },
     "bot_api_key": "<BOT_API_KEY>",
     "nip05_verification": true,
+    "relays": [
+        "wss://nostr.massmux.com",
+        "wss://relay.damus.io",
+        "wss://nostr-pub.wellorder.net",
+        "wss://relay.nostr.info",
+        "wss://relay.snort.social"
+    ],
     "admins": [
         "<ADMIN_ID>"
     ],

@@ -100,7 +100,7 @@ input[readOnly] {
 
 .settings {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   grid-gap: 10px;
   padding: 10px;
 }
@@ -175,6 +175,9 @@ input[readOnly] {
   margin: 10px;
   position: relative;
   padding: 20px;
+}
+
+.frosty {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(50px);
   border-radius: 10px;
@@ -214,7 +217,7 @@ input[readOnly] {
 }
 
 .to_start {
-  background-color: greenyellow;
+  background-color: #4CAF50; /* Green background */
   color: white;
 }
 
@@ -267,4 +270,22 @@ input[readOnly] {
   width: 60px;
   padding: 10px;
   text-align: center;
+}
+
+@media screen and (min-width: 480px) {
+  .settings {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .settings {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .settings {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

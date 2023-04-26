@@ -96,19 +96,19 @@ class Settings:
         message = ""
         if self._settings.get(Settings.PRIVATE_KEY) == "<NOSTR_PRIVATE_KEY>":
             ret = False
-            message += "Please set your NOSTR_PRIVATE_KEY in settings.json\n"
+            message += "Please set your NOSTR_PRIVATE_KEY\n"
         if self._settings.get(Settings.PUBLIC_KEY) == "<NOSTR_PUBLIC_KEY>":
             ret = False
-            message += "Please set your NOSTR_PUBLIC_KEY in settings.json\n"
+            message += "Please set your NOSTR_PUBLIC_KEY\n"
         if self._settings.get(Settings.BVB_API_KEY) == "<BVB_API_KEY>":
             ret = False
-            message += "Please set your BVB_API_KEY in settings.json\n"
+            message += "Please set your BVB_API_KEY\n"
         if self._settings.get(Settings.BVB_API_KEY) == "<BOT_API_KEY>":
             ret = False
-            message += "Please set your BOT_API_KEY in settings.json\n"
+            message += "Please set your BOT_API_KEY\n"
         if "<ADMIN_ID>" in self._settings.get(Settings.ADMINS):
             ret = False
-            message += "Please set your ADMIN_ID in settings.json\n"
+            message += "Please set at least an ADMIN_ID\n"
             
         return ret, message
 
@@ -137,6 +137,7 @@ class Settings:
                 json.dump(self._settings, f, indent=4)
 
     def get(self):
+        self.reload()
         return self._settings
     
     def set(self, settings: dict):

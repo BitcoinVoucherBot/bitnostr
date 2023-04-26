@@ -34,6 +34,7 @@ class NostrCoreBot:
     def setup(self):
         self.relay_manager = RelayManager()
         self.relay_manager.on_relay_open = self.on_relay_open
+        self.relay_manager.on_relay_close = self.on_relay_close
 
     def on_relay_open(self, url):
         print(f"RELAY CONNECTED - {url}")

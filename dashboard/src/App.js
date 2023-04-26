@@ -95,6 +95,7 @@ class App extends Component {
     });
     const jsonResponse = await response.json();
     console.log(jsonResponse);
+    this.setState({ editable: false });
   }
 
   editSettings = () => {
@@ -132,8 +133,16 @@ class App extends Component {
     });
   }
 
-  handleChange = (e) => {
+  handleInputNewChange = (e) => {
     this.setState({ [e.target.id]: e.target.value });
+  }
+
+  handleInputChange = (e, key, index=0) => {
+    const { value } = e.target;
+    this.setState(prevState => {
+      prevState.settings[key] = value
+      return { settings: prevState.settings };
+    });
   }
 
   startBot = async () => {
@@ -150,8 +159,11 @@ class App extends Component {
     });
     const jsonResponse = await response.json();
     if (response.status == 200) {
+      if (jsonResponse.success == false) {
+        alert(jsonResponse.message);
+      }
       const status = jsonResponse.status;
-      this.setState({ status: status });
+      this.setState({ status: status });  
     } else {
       alert(response.statusText);
       this.setState({ status: "STOPPED" });
@@ -238,7 +250,7 @@ class App extends Component {
               </div>
               <div className='settings'>
               {Object.entries(settings).map(([key, value]) => (
-                <div className="settings-item" key={key}>
+                <div className="settings-item frosty" key={key}>
                   <div className="label-container">
                     <label htmlFor={key}>{key}</label>
                   </div>
@@ -249,7 +261,7 @@ class App extends Component {
                           className='settings-input-new'
                           id={`${key}-new`}
                           value={this.state[key + '-new'] || ''}
-                          onChange={this.handleChange}
+                          onChange={(e) => this.handleInputNewChange(e)}
                           placeholder="New item"
                         />
                       </div>
@@ -282,7 +294,9 @@ class App extends Component {
                       <div key={key}>
                         <input 
                           className='settings-input' 
-                          id={key} value={value} 
+                          id={key} 
+                          value={value}
+                          onChange={(e) => this.handleInputChange(e, key)} 
                           {... (editable ? {} : {readOnly: true, disabled: true})}
                           />
                       </div>
