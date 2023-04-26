@@ -6,6 +6,7 @@
   --main-button-background-hover-color: #3f8c4a;
   --second-button-background-color: #f44336;
   --second-button-background-hover-color: #d32f2f;
+  --restarting-bot-color: orange;
 }
 
 body {
@@ -37,6 +38,33 @@ label {
   font-weight: bold;
   font-size: medium;
   margin-bottom: 10px;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  margin: 0;
+}
+
+.loader {
+  display: inline-block;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .background-image {
@@ -73,6 +101,10 @@ label {
 
 #status[status="STOPPED"] {
   color: var(--second-button-background-color);
+}
+
+#status[status="RESTARTING"] {
+  color: var(--restarting-bot-color);
 }
 
 .status::before {

@@ -75,7 +75,7 @@ class App extends Component {
   }
 
   updateSettings = async () => {
-    let confirm = window.confirm('Are you sure you want to update the settings?');
+    let confirm = window.confirm('Are you sure you want to update the settings?\nIn order to apply the changes, the bot will be restarted.');
     if (!confirm) {
       return;
     }
@@ -103,7 +103,16 @@ class App extends Component {
     });
     const jsonResponse = await response.json();
     console.log(jsonResponse);
-    this.setState({ editable: false });
+
+    // restart bot if needed
+    this.setState({ status: 'RESTARTING', connected: [] });
+    setTimeout(() => {
+      this.stopBot(true);
+      setTimeout(() => {
+        this.startBot(true);
+        this.setState({ editable: false });
+      }, 5000);
+    }, 5000);
   }
 
   editSettings = () => {
@@ -162,10 +171,12 @@ class App extends Component {
     }));
   }
 
-  startBot = async () => {
-    let confirm = window.confirm('Are you sure you want to start the bot?');
-    if (!confirm) {
-      return;
+  startBot = async (force) => {
+    if (!force) {
+      let confirm = window.confirm('Are you sure you want to start the bot?');
+      if (!confirm) {
+        return;
+      }
     }
     const response = await fetch('http://localhost:8080/bot/start', {
       method: 'POST',
@@ -180,17 +191,20 @@ class App extends Component {
         alert(jsonResponse.message);
       }
       const status = jsonResponse.status;
-      this.setState({ status: status });  
+      this.setState({ status: status }); 
+      this.fetchInfo(); 
     } else {
       alert(response.statusText);
-      this.setState({ status: "STOPPED" });
+      this.setState({ status: "STOPPED", connected: [] });
     }
   }
 
-  stopBot = async () => {
-    let confirm = window.confirm('Are you sure you want to stop the bot?');
-    if (!confirm) {
-      return;
+  stopBot = async (force) => {
+    if (!force) {
+      let confirm = window.confirm('Are you sure you want to force stop the bot?');
+      if (!confirm) {
+        return;
+      }
     }
     const response = await fetch('http://localhost:8080/bot/stop', {
       method: 'POST',
@@ -203,10 +217,10 @@ class App extends Component {
     console.log(jsonResponse);
     if (response.status == 200) {
       const status = jsonResponse.status;
-      this.setState({ status: status });
+      this.setState({ status: status, connected: [] });
     } else {
       alert(response.statusText);
-      this.setState({ status: "STOPPED" });
+      this.setState({ status: "STOPPED", connected: [] });
     }
   }
 
@@ -229,9 +243,9 @@ class App extends Component {
             <h1 className="header-title">BitcoinVoucherBot</h1>
           </div>
           { loading ? (
-            <div className="loading">
-              <div className="loading-text">Loading...</div>
-              </div>
+            <div className="loader-container">
+              <div className="loader"/>
+            </div>
             ) : (
               <div>
                 { settings && status && settings.relays ? (
@@ -249,11 +263,11 @@ class App extends Component {
                       </div>
                       {status === 'RUNNING' ? (
                         <div>
-                          <button className="button to_stop" onClick={this.stopBot}>Stop bot</button>
+                          <button className="button to_stop" onClick={() => this.stopBot(false)}>Stop bot</button>
                         </div>
                       ) : (
                         <div>
-                          <button className="button to_start" onClick={this.startBot}>Start bot</button>
+                          <button className="button to_start" onClick={() => this.startBot(false)}>Start bot</button>
                         </div>
                       )}
                     </div>

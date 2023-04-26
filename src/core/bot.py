@@ -35,6 +35,8 @@ class NostrCoreBot:
         self.relay_manager = RelayManager()
         self.relay_manager.on_relay_open = self.on_relay_open
         self.relay_manager.on_relay_close = self.on_relay_close
+        self.settings.set_last_message_created_at(math.floor(time.time()))
+        
 
     def on_relay_open(self, url):
         print(f"RELAY CONNECTED - {url}")
