@@ -217,7 +217,10 @@ class App extends Component {
       <div className="container">
          <div className="background-image"></div>
          <div className="content">
-          <h1>BitcoinVoucherBot</h1>
+          <div className="header">
+            <img className="header-logo" src="logo.png" />
+            <h1 className="header-title">BitcoinVoucherBot</h1>
+          </div>
           { settings && status && settings.relays ? (
             <div className='status-container'>
               <div>
