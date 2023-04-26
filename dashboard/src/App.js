@@ -9,7 +9,8 @@ class App extends Component {
       settings: null,
       status: 'RUNNING',
       connected: [],
-      editable: false
+      editable: false,
+      secureInput: {}
     };
   }
 
@@ -145,6 +146,15 @@ class App extends Component {
     });
   }
 
+  toggleSecureInput = (inputId) => {
+    this.setState(prevState => ({
+      secureInput: {
+        ...prevState.secureInput,
+        [inputId]: !prevState.secureInput[inputId]
+      }
+    }));
+  }
+
   startBot = async () => {
     let confirm = window.confirm('Are you sure you want to start the bot?');
     if (!confirm) {
@@ -207,7 +217,7 @@ class App extends Component {
       <div className="container">
          <div className="background-image"></div>
          <div className="content">
-          <h1>BitcoinVoucherBot - Nostr</h1>
+          <h1>BitcoinVoucherBot</h1>
           { settings && status && settings.relays ? (
             <div className='status-container'>
               <div>
@@ -235,7 +245,7 @@ class App extends Component {
           ) : (
             <p>Loading...</p>
           )}
-          <h2>Settings</h2>
+          <h2>Nostr Bot Settings</h2>
           {settings ? (
             <div>
               <div>
@@ -291,14 +301,28 @@ class App extends Component {
                         </div>
                       ))
                     ) : (
-                      <div key={key}>
-                        <input 
-                          className='settings-input' 
-                          id={key} 
-                          value={value}
-                          onChange={(e) => this.handleInputChange(e, key)} 
-                          {... (editable ? {} : {readOnly: true, disabled: true})}
-                          />
+                      <div className="input-list-container" key={key}>
+                        <div className="input-list-content">
+                          <input 
+                            className='settings-input' 
+                            id={key} 
+                            value={value}
+                            type={editable || this.state.secureInput[key]  ? 'text' : 'password'}
+                            onChange={(e) => this.handleInputChange(e, key)} 
+                            {... (editable ? {} : {readOnly: true, disabled: true})}
+                            />
+                        </div>
+                          {!editable ? (
+                            <div className="remove-btn-content">
+                              <button 
+                              className="secureToggleButton" 
+                              onClick={() => this.toggleSecureInput(key)}
+                              {... (!this.state.secureInput[key] ? {'data-secure': true} : {})}
+                            > 
+                              <span className="material-icons">{!this.state.secureInput[key] ? 'visibility' : 'visibility_off'}</span>
+                            </button>
+                          </div>
+                          ) : null}
                       </div>
                     )}
                   </div>

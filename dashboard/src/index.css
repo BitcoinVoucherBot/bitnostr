@@ -1,3 +1,11 @@
+:root {
+  --primary-color: #ae47f4;
+  --main-button-background-color: #4CAF50;
+  --main-button-background-hover-color: #3f8c4a;
+  --second-button-background-color: #f44336;
+  --second-button-background-hover-color: #d32f2f;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -14,7 +22,7 @@ code {
 }
 
 h1, h2 {
-  color: #ae47f4;
+  color: var(--primary-color);
 }
 
 label {
@@ -49,11 +57,11 @@ label {
 }
 
 #status[status="RUNNING"] {
-  color: greenyellow;
+  color: var(--main-button-background-color);
 }
 
 #status[status="STOPPED"] {
-  color: red;
+  color: var(--second-button-background-color);
 }
 
 .status::before {
@@ -77,7 +85,7 @@ input {
   padding: 0px 0px 0px 10px;
   background-color: transparent;
   color: #fff;
-  border: 2px solid #ae47f4;
+  border: 2px solid var(--primary-color);
   border-radius: 10px;
 }
 
@@ -85,7 +93,7 @@ input[readOnly] {
   background-color: transparent;
   color: #fff;
   border: none;
-  border-bottom: 2px solid #ae47f4;
+  border-bottom: 2px solid var(--primary-color);
   font-weight: normal;
   font-size: 15px !important;
   font-size: medium;
@@ -109,7 +117,7 @@ input[readOnly] {
   background-color: transparent;
   color: #fff;
   border: none;
-  border: 2px solid #ae47f4;
+  border: 2px solid var(--primary-color);
   font-weight: normal;
   font-size: 15px !important;
   font-size: medium;
@@ -125,7 +133,7 @@ input[readOnly] {
 }
 
 .remove-btn {
-  background-color: #f44336; /* Red background */
+  background-color: var(--second-button-background-color);
   border: none;
   color: white;
   text-align: center;
@@ -140,11 +148,11 @@ input[readOnly] {
 }
 
 .remove-btn:hover, .to_stop:hover {
-  background-color: #d32f2f; /* Darken red background on hover */
+  background-color: var(--second-button-background-hover-color);
 }
 
 .add-btn {
-  background-color: #4CAF50; /* Green background */
+  background-color: var(--main-button-background-color);
   border: none;
   color: white;
   text-align: center;
@@ -159,7 +167,7 @@ input[readOnly] {
 }
 
 .add-btn:hover, .to_start:hover, .update-btn:hover {
-  background-color: #3f8c4a; /* Darken green background on hover */
+  background-color: var(--main-button-background-hover-color)
 }
 
 .material-icons {
@@ -190,7 +198,7 @@ input[readOnly] {
 }
 
 .connected-relay::before {
-  color: #d32f2f;
+  color: var(--second-button-background-color);
   font-family: 'Material Icons';
   content: "\e5cd";
   margin-right: 5px;
@@ -202,7 +210,7 @@ input[readOnly] {
 }
 
 .connected-relay[data-connected]::before {
-  color: greenyellow !important;
+  color: var(--main-button-background-color) !important;
   content: "✓";
   margin-right: 5px;
   margin-left: 5px;
@@ -217,17 +225,17 @@ input[readOnly] {
 }
 
 .to_start {
-  background-color: #4CAF50; /* Green background */
+  background-color: var(--main-button-background-color);
   color: white;
 }
 
 .to_stop {
-  background-color: #f44336;
+  background-color: var(--second-button-background-color);
   color: white;
 }
 
 .edit-btn {
-  background-color: #4CAF50; /* Green background */
+  background-color: var(--main-button-background-color);
   border: none;
   color: white;
   text-align: center;
@@ -242,7 +250,7 @@ input[readOnly] {
 }
 
 .cancel-btn {
-  background-color: #f44336; /* Red background */
+  background-color: var(--second-button-background-color);
   border: none;
   color: white;
   text-align: center;
@@ -271,6 +279,31 @@ input[readOnly] {
   padding: 10px;
   text-align: center;
 }
+
+.secureToggleButton {
+  color: white;
+  height: 40px;
+  width: 40px;
+  border: none;
+  background-color: darkgrey;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.secureToggleButton[data-secure] {
+  color: #fff;
+  background-color: darkgrey;
+}
+
+/* .secureToggleButton::after {
+  font-family: 'Material Icons';
+  content: \e8f4;
+}
+
+.secureToggleButton[data-secure]::before {
+  font-family: 'Material Icons';
+  content: \e8f4;
+} */
 
 @media screen and (min-width: 480px) {
   .settings {
