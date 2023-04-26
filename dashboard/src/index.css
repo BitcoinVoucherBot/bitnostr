@@ -147,7 +147,7 @@ input[readOnly] {
   transition: background-color 0.3s;
 }
 
-.remove-btn:hover, .to_stop:hover {
+.remove-btn:hover, .to_stop:hover, .cancel-btn:hover {
   background-color: var(--second-button-background-hover-color);
 }
 
@@ -217,7 +217,7 @@ input[readOnly] {
 }
 
 .button {
-  border-radius: 10px;
+  border-radius: 4px;
   border: none;
   padding: 10px;
   background-color: transparent;
@@ -234,7 +234,7 @@ input[readOnly] {
   color: white;
 }
 
-.edit-btn {
+.update-btn {
   background-color: var(--main-button-background-color);
   border: none;
   color: white;
@@ -286,7 +286,7 @@ input[readOnly] {
   width: 40px;
   border: none;
   background-color: darkgrey;
-  border-radius: 10px;
+  border-radius: 4px;
   padding: 10px;
 }
 

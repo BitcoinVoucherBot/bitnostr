@@ -252,10 +252,10 @@ class App extends Component {
                 { editable ? (
                   <div>
                     <button className="button cancel-btn" onClick={this.cancelEditSettings}>Cancel</button>
-                    <button className="button edit-btn" onClick={this.updateSettings}>Save settings</button>
+                    <button className="button update-btn" onClick={this.updateSettings}>Save settings</button>
                   </div>
                 ) : (
-                  <button className="button edit-btn" onClick={this.editSettings}>Edit settings</button>
+                  <button className="button update-btn" onClick={this.editSettings}>Edit settings</button>
                 )}
               </div>
               <div className='settings'>
