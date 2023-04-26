@@ -1,4 +1,6 @@
 :root {
+  --primary-text-color: #ae47f4;
+  --second-text-color: #fff;
   --primary-color: #ae47f4;
   --main-button-background-color: #4CAF50;
   --main-button-background-hover-color: #3f8c4a;
@@ -21,8 +23,12 @@ code {
     monospace;
 }
 
-h1, h2 {
-  color: var(--primary-color);
+h1 {
+  color: var(--primary-text-color);
+}
+
+h2 {
+  color: var(--second-text-color);
 }
 
 label {
@@ -133,7 +139,7 @@ input[readOnly] {
 }
 
 .settings-input {
-  width: 95% !important;
+  width: 100% !important;
 }
 
 .remove-btn {
