@@ -224,9 +224,9 @@ class App extends Component {
                 <div className='status-item'>
                   <span className='status' id='status' status={status}>{status}</span>
                 </div>
-                <div className='status-item'>
+                <div className='relays-list'>
                   {Object.entries(settings.relays).map(([key, value]) => (
-                    <div key={key}>
+                    <div key={key} className="relay-item frosty">
                     <span className='connected-relay' id={key} {... (this.checkIfRelayIsConnected(value) ? {'data-connected': true} : {})}>{value}</span>
                     </div>
                   ))}

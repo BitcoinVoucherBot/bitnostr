@@ -164,6 +164,7 @@ input[readOnly] {
   padding: 8px 16px;
   border-radius: 4px;
   transition: background-color 0.3s;
+  margin-top: 15px
 }
 
 .add-btn:hover, .to_start:hover, .update-btn:hover {
@@ -276,7 +277,7 @@ input[readOnly] {
 
 .remove-btn-content, .add-btn-content {
   width: 60px;
-  padding: 10px;
+  padding: 0px 0px 0px 10px;
   text-align: center;
 }
 
@@ -295,19 +296,27 @@ input[readOnly] {
   background-color: darkgrey;
 }
 
-/* .secureToggleButton::after {
-  font-family: 'Material Icons';
-  content: \e8f4;
+.relays-list {
+  display: grid;
+  /* grid-template-columns: repeat(3, 1fr); */
+  /* grid-template-rows: repeat(3, auto); */
+  grid-auto-flow: column;
+  grid-gap: 10px;
+  padding: 20px;
 }
 
-.secureToggleButton[data-secure]::before {
-  font-family: 'Material Icons';
-  content: \e8f4;
-} */
+.relay-item {
+  padding: 10px;
+}
 
 @media screen and (min-width: 480px) {
   .settings {
     grid-template-columns: repeat(1, 1fr);
+  }
+  .relays-list {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(auto, auto);
+    grid-auto-flow: row;
   }
 }
 
@@ -315,10 +324,20 @@ input[readOnly] {
   .settings {
     grid-template-columns: repeat(2, 1fr);
   }
+  .relays-list {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
+    grid-auto-flow: column;
+  }
 }
 
 @media screen and (min-width: 1024px) {
   .settings {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .relays-list {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, auto);
+    grid-auto-flow: column;
   }
 }
