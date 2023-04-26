@@ -1,5 +1,7 @@
 import { Component } from "react";
 import './App.css';
+import StatusComponent from './components/StatusComponent';
+import SettingsComponent from './components/SettingsComponent';
 
 class App extends Component {
   
@@ -104,7 +106,6 @@ class App extends Component {
     const jsonResponse = await response.json();
     console.log(jsonResponse);
 
-    // restart bot if needed
     this.setState({ status: 'RESTARTING', connected: [] });
     setTimeout(() => {
       this.stopBot(true);
@@ -249,115 +250,29 @@ class App extends Component {
             ) : (
               <div>
                 { settings && status && settings.relays ? (
-                  <div className='status-container'>
-                    <div>
-                      <div className='status-item'>
-                        <span className='status' id='status' status={status}>{status}</span>
-                      </div>
-                      <div className='relays-list'>
-                        {Object.entries(settings.relays).map(([key, value]) => (
-                          <div key={key} className="relay-item frosty">
-                          <span className='connected-relay' id={key} {... (this.checkIfRelayIsConnected(value) ? {'data-connected': true} : {})}>{value}</span>
-                          </div>
-                        ))}
-                      </div>
-                      {status === 'RUNNING' ? (
-                        <div>
-                          <button className="button to_stop" onClick={() => this.stopBot(false)}>Stop bot</button>
-                        </div>
-                      ) : (
-                        <div>
-                          <button className="button to_start" onClick={() => this.startBot(false)}>Start bot</button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                  <StatusComponent 
+                    status={status}
+                    settings={settings}
+                    checkIfRelayIsConnected={(e) => this.checkIfRelayIsConnected(e)}
+                    startBot={() => this.startBot(false)}
+                    stopBot={() => this.stopBot(false)}
+                  />
                 ) : null}
                 {settings ? (
-                  <div>
-                    <h2>Nostr Bot Settings</h2>
-                    <div>
-                      { editable ? (
-                        <div>
-                          <button className="button cancel-btn" onClick={this.cancelEditSettings}>Cancel</button>
-                          <button className="button update-btn" onClick={this.updateSettings}>Save settings</button>
-                        </div>
-                      ) : (
-                        <button className="button update-btn" onClick={this.editSettings}>Edit settings</button>
-                      )}
-                    </div>
-                    <div className='settings'>
-                    {Object.entries(settings).map(([key, value]) => (
-                      <div className="settings-item frosty" key={key}>
-                        <div className="label-container">
-                          <label htmlFor={key}>{key}</label>
-                        </div>
-                        {Array.isArray(value) && editable ? (
-                          <div className="input-list-container" key={`${key}-new`}>
-                            <div className="input-list-content">
-                              <input
-                                className='settings-input-new'
-                                id={`${key}-new`}
-                                value={this.state[key + '-new'] || ''}
-                                onChange={(e) => this.handleInputNewChange(e)}
-                                placeholder="New item"
-                              />
-                            </div>
-                            <div className="add-btn-content">
-                              <button className='add-btn' onClick={() => this.addItem(key)}><i className="material-icons">add</i></button>
-                            </div>
-                          </div>
-                        ) : null}
-                        <div>
-                          {Array.isArray(value) ? (
-                            value.map((item, index) => (
-                              <div className="input-list-container" key={`${key}-${index}`}>
-                                <div className="input-list-content">
-                                  <input
-                                    className='settings-input-list'
-                                    id={`${key}-${index}`}
-                                    value={item}
-                                    readOnly
-                                    disabled
-                                  />
-                                </div>
-                                {editable ? (
-                                  <div className="remove-btn-content">
-                                    <button className="remove-btn" onClick={() => this.removeItem(key, index)}><i className="material-icons">delete</i></button>
-                                  </div>
-                                ) : null}
-                              </div>
-                            ))
-                          ) : (
-                            <div className="input-list-container" key={key}>
-                              <div className="input-list-content">
-                                <input 
-                                  className='settings-input' 
-                                  id={key} 
-                                  value={value}
-                                  type={editable || this.state.secureInput[key]  ? 'text' : 'password'}
-                                  onChange={(e) => this.handleInputChange(e, key)} 
-                                  {... (editable ? {} : {readOnly: true, disabled: true})}
-                                  />
-                              </div>
-                                {!editable ? (
-                                  <div className="remove-btn-content">
-                                    <button 
-                                    className="secureToggleButton" 
-                                    onClick={() => this.toggleSecureInput(key)}
-                                    {... (!this.state.secureInput[key] ? {'data-secure': true} : {})}
-                                  > 
-                                    <span className="material-icons">{!this.state.secureInput[key] ? 'visibility' : 'visibility_off'}</span>
-                                  </button>
-                                </div>
-                                ) : null}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  </div>
+                  <SettingsComponent 
+                    state={this.state}
+                    settings={settings}
+                    editable={editable}
+                    secureInput={this.state.secureInput}
+                    cancelEditSettings={() => this.cancelEditSettings()}
+                    updateSettings={() => this.updateSettings()}
+                    editSettings={() => this.editSettings()}
+                    removeItem={(key, index) => this.removeItem(key, index)}
+                    handleInputChange={(e, key, index) => this.handleInputChange(e, key, index)}
+                    toggleSecureInput={(inputId) => this.toggleSecureInput(inputId)}
+                    handleInputNewChange={(e) => this.handleInputNewChange(e)}
+                    addItem={(key) => this.addItem(key)}
+                  />
                 ) : null }
               </div>
             )}
