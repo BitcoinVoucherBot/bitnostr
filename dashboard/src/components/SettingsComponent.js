@@ -66,7 +66,7 @@ class SettingsComponent extends Component {
                                         editable={editable}
                                         handleInputChange={(e) => handleInputChange(e)}
                                         secureInput={secureInput}
-                                        toggleSecureInput={() => toggleSecureInput()}
+                                        toggleSecureInput={(e) => toggleSecureInput(e)}
                                     />
                                 )}
                             </div>

@@ -234,7 +234,7 @@ class App extends Component {
   }
 
   render() {
-    const { settings, status, editable, loading } = this.state;
+    const { settings, status, editable, loading, secureInput } = this.state;
     return (
       <div className="container">
          <div className="background-image"></div>
@@ -263,7 +263,7 @@ class App extends Component {
                     state={this.state}
                     settings={settings}
                     editable={editable}
-                    secureInput={this.state.secureInput}
+                    secureInput={secureInput}
                     cancelEditSettings={() => this.cancelEditSettings()}
                     updateSettings={() => this.updateSettings()}
                     editSettings={() => this.editSettings()}
