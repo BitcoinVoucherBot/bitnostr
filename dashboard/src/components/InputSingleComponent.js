@@ -2,6 +2,15 @@ import { Component } from "react";
 
 class InputSingleComponent extends Component {
 
+
+    isDefaultValue = (value) => {
+        const regex = /<.*>/;
+        if (regex.test(value)) {
+            return true;
+        }
+        return false;
+    }
+
     render() {
         const { k, value, editable, handleInputChange, secureInput, toggleSecureInput } = this.props;
         return (
@@ -11,12 +20,12 @@ class InputSingleComponent extends Component {
                         className='settings-input' 
                         id={k} 
                         value={value}
-                        type={editable || secureInput[k]  ? 'text' : 'password'}
+                        type={editable || secureInput[k] || this.isDefaultValue(value)  ? 'text' : 'password'}
                         onChange={(e) => handleInputChange(e, k)} 
                         {... (editable ? {} : {readOnly: true, disabled: true})}
                     />
                 </div>
-                {!editable ? (
+                {!editable && !this.isDefaultValue(value) ? (
                     <div className="remove-btn-content">
                     <button 
                         className="secureToggleButton" 

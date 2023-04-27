@@ -61,6 +61,10 @@ class Bot(NostrCoreBot):
             self.redis.set('connected_relays', json.dumps(list(self.connected_relays)))
             self.redis.set('status', 'STOPPED')
 
+        def clear_info(self):
+            self.redis.set('connected_relays', json.dumps(list(self.connected_relays)))
+            self.redis.set('status', 'STOPPED')
+
         def process_metadata(self, event, metadata):
             created_at = metadata['created_at']
             if 'lud16' in metadata:

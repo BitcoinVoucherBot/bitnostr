@@ -145,6 +145,10 @@ input[readOnly] {
   border-radius: 0px;
 }
 
+input::placeholder {
+  color: darkgray;
+}
+
 .label-container {
   margin-bottom: 10px;
 }
@@ -396,4 +400,10 @@ input[readOnly] {
     grid-template-rows: repeat(3, auto);
     grid-auto-flow: column;
   }
+}
+
+.empty-list {
+  color: var(--second-text-color);
+  text-align: center;
+  margin-top: 50px;
 }

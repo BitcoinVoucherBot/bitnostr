@@ -71,6 +71,10 @@ def stop():
     print("Attempting to disconnect")
     nb.disconnect_relays()
     print("Disconnected!")
+
+def clear_info():
+    print("Clearing info")
+    nb.clear_info()
     
 if __name__ == "__main__":
     # Global setting
@@ -83,6 +87,7 @@ if __name__ == "__main__":
     if settings_has_valid_values[0] == True:
         start()
     else:
+        clear_info()
         print("ERROR - Invalid settings:\n\n", settings_has_valid_values[1])
 
     if not utils.is_running_in_docker():

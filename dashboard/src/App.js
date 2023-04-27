@@ -48,6 +48,11 @@ class App extends Component {
       delete settingsJson['on_chain_tiers'];
       delete settingsJson['nip05_verification'];
       delete settingsJson['message_to_sign'];
+
+      // check if settingsJson.admin contain <ADMIN_ID> and remove it from list
+      if (settingsJson.admins.includes('<ADMIN_ID>')) {
+        settingsJson.admins = settingsJson.admins.filter((id) => id !== '<ADMIN_ID>');
+      }
       
       this.setData(settingsJson);
     } catch (error) {
@@ -77,7 +82,7 @@ class App extends Component {
   }
 
   updateSettings = async () => {
-    let confirm = window.confirm('Are you sure you want to update the settings?\nIn order to apply the changes, the bot will be restarted.');
+    let confirm = window.confirm('Are you sure you want to update the settings?\nIn order to apply the changes, the bot will be manually restarted.');
     if (!confirm) {
       return;
     }
@@ -106,18 +111,15 @@ class App extends Component {
     const jsonResponse = await response.json();
     console.log(jsonResponse);
 
-    this.setState({ status: 'RESTARTING', connected: [] });
-    setTimeout(() => {
-      this.stopBot(true);
-      setTimeout(() => {
-        this.startBot(true);
-        this.setState({ editable: false });
-      }, 5000);
-    }, 5000);
+    this.setState({ editable: false });
   }
 
   editSettings = () => {
-    this.setState({ editable: true });
+    if (this.state.status !== 'RUNNING') {
+      this.setState({ editable: true });
+    } else {
+      alert('Please stop the bot before editing the settings.\nThan restart it after you are done.');
+    }
   }
 
   cancelEditSettings = () => {
@@ -172,6 +174,36 @@ class App extends Component {
     }));
   }
 
+  checkIfSettingsAreValid = () => {
+    let nostr_private_key_valid = false
+    let nostr_public_key_valid = false
+    let bvb_api_key_valid = false
+    let bot_api_key_valid = false
+    let relays_valid = false
+    let admins_valid = false
+    const settings = this.state.settings;
+    if (settings.nostr_private_key !== '' && settings.nostr_private_key !== '<NOSTR_PRIVATE_KEY>') {
+      nostr_private_key_valid = true
+    }
+    if (settings.nostr_public_key !== '' && settings.nostr_public_key !== '<NOSTR_PUBLIC_KEY>') {
+      nostr_public_key_valid = true
+    }
+    if (settings.bvb_api_key !== '' && settings.bvb_api_key !== '<BVB_API_KEY>') {
+      bvb_api_key_valid = true
+    }
+    if (settings.bot_api_key !== '' && settings.bot_api_key !== '<BOT_API_KEY>') {
+      bot_api_key_valid = true
+    }
+    if (settings.relays.length > 0) {
+      relays_valid = true
+    }
+    if (settings.admins.length > 0 && !settings.admins.includes('<ADMIN_ID>')) {
+      admins_valid = true
+    }
+
+    return nostr_private_key_valid && nostr_public_key_valid && bvb_api_key_valid && bot_api_key_valid && relays_valid && admins_valid
+  }
+
   startBot = async (force) => {
     if (!force) {
       let confirm = window.confirm('Are you sure you want to start the bot?');
@@ -179,6 +211,12 @@ class App extends Component {
         return;
       }
     }
+
+    if (!this.checkIfSettingsAreValid()) {
+      alert('Please make sure all the settings are valid before starting the bot.');
+      return;
+    }
+
     const response = await fetch('http://localhost:8080/bot/start', {
       method: 'POST',
       headers: {

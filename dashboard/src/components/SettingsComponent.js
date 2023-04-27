@@ -5,6 +5,10 @@ import InputSingleComponent from './InputSingleComponent';
 
 class SettingsComponent extends Component {
 
+    sanitize (value) {
+        return value.replace(/_/g, ' ').toUpperCase();
+    }
+
     render() {
         const { 
             state, 
@@ -37,7 +41,7 @@ class SettingsComponent extends Component {
                     {Object.entries(settings).map(([key, value]) => (
                         <div className="settings-item frosty" key={key}>
                             <div className="label-container">
-                                <label htmlFor={key}>{key}</label>
+                                <label htmlFor={key}>{this.sanitize(key)}</label>
                             </div>
                             {Array.isArray(value) && editable ? (
                                 <InputListNew 
@@ -49,22 +53,30 @@ class SettingsComponent extends Component {
                             ) : null}
                             <div>
                                 {Array.isArray(value) ? (
-                                    value.map((item, index) => (
-                                        <InputListComponent 
-                                            key={`${key}-${index}`}
-                                            k={key}
-                                            index={index}
-                                            item={item}
-                                            editable={editable}
-                                            removeItem={(k, index) => removeItem(k, index)}
-                                        />
-                                    ))
+                                    // check if value is empty array
+                                    value.length > 0 ? (
+                                        value.map((item, index) => (
+                                            <InputListComponent 
+                                                key={`${key}-${index}`}
+                                                k={key}
+                                                index={index}
+                                                item={item}
+                                                editable={editable}
+                                                removeItem={(k, index) => removeItem(k, index)}
+                                            />
+                                        ))
+                                    ) : (
+                                        <div className="empty-list">
+                                            <p>Empty list</p>
+                                            <p>Add at least one item to the list</p>
+                                        </div>
+                                    )   
                                 ) : (
                                     <InputSingleComponent 
                                         k={key}
                                         value={value}
                                         editable={editable}
-                                        handleInputChange={(e) => handleInputChange(e)}
+                                        handleInputChange={(e) => handleInputChange(e, key)}
                                         secureInput={secureInput}
                                         toggleSecureInput={(e) => toggleSecureInput(e)}
                                     />
