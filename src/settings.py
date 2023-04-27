@@ -125,25 +125,21 @@ class Settings:
         self.save()
 
     def save(self):
-        with open("settings.json", "r") as f:
-            new_settings = json.load(f)
-            # verify if params are changed and update only changed params
-            for key, value in self._settings.items():
-                if new_settings.get(key) != value:
-                    new_settings[key] = value
-            self._settings = new_settings
-            # save
-            with open("settings.json", "w") as f:
-                json.dump(self._settings, f, indent=4)
+        with open("settings.json", "w") as f:
+            json.dump(self._settings, f, indent=4)
 
     def get(self):
         self.reload()
         return self._settings
     
     def set(self, settings: dict):
-        self._settings = settings
+        self._settings.update(settings)
         self.save()
+        self.reload()
+        print(f"Settings updated: {self._settings}")
+        print("End of settings update")
 
     def reload(self):
         with open("settings.json", "r") as f:
             self._settings = json.load(f)
+            print(f"Settings reloaded: {self._settings}")

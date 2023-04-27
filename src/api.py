@@ -12,6 +12,9 @@ class API:
     settings = Settings()
 
     def get_headers(self):
+        
+        self.settings.reload()
+
         headers = {
             'Content-Type': 'application/json',
             'Authorization': self.settings.bvb_api_key

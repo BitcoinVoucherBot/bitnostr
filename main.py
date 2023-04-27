@@ -19,8 +19,6 @@ pubsub = None
 
 def start_bot():
     print("Starting bot")
-    settings.reload()
-    print("Settings reloaded")
     
     try:
         relays = None
@@ -78,7 +76,7 @@ def clear_info():
     
 if __name__ == "__main__":
     # Global setting
-    logging.basicConfig(level="FATAL")
+    logging.basicConfig(level="ERROR")
 
     redis_thread = threading.Thread(target=subscribe_to_redis)
     redis_thread.start() 
