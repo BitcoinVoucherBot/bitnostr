@@ -52,6 +52,8 @@ services:
       options:
         max-size: "50m"
         max-file: "3"
+    volumes:
+      - ${PWD}/settings.json:/app/settings.json
 
   dashboard:
     container_name: dashboard
