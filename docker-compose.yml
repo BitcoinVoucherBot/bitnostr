@@ -36,6 +36,8 @@ services:
   flask:
     environment: 
         - production
+        - USER_NAME=${USER_NAME}
+        - USER_PASSWORD=${USER_PASSWORD}
     image: flask
     container_name: flask
     ports:

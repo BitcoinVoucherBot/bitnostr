@@ -53,3 +53,4 @@ docker-compose.debug.yml
 libsecp256k1.0.dylib
 #redis
 data/**
+.env

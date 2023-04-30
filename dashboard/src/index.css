@@ -7,6 +7,7 @@
   --second-button-background-color: #f44336;
   --second-button-background-hover-color: #d32f2f;
   --restarting-bot-color: orange;
+  --border-radius: 10px;
 }
 
 body {
@@ -124,12 +125,22 @@ label {
 }
 
 input {
+  box-sizing: border-box;
   height: 40px;
   padding: 0px 0px 0px 10px;
   background-color: transparent;
   color: #fff;
   border: 2px solid var(--primary-color);
-  border-radius: 10px;
+  border-radius: var(--border-radius);
+  -webkit-appearance: none;
+  -ms-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 14px;
+}
+
+input:focus {
+  outline: none;
 }
 
 input[readOnly] {
@@ -171,7 +182,7 @@ input::placeholder {
   margin-right: 10px;
   height: 40px;
   width: 100%;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   padding: 0px 0px 0px 10px;
 }
 
@@ -190,11 +201,11 @@ input::placeholder {
   margin: 2px 2px;
   cursor: pointer;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   transition: background-color 0.3s;
 }
 
-.remove-btn:hover, .to_stop:hover, .cancel-btn:hover {
+.remove-btn:hover, .to_stop:hover, .cancel-btn:hover, .logout-button:hover {
   background-color: var(--second-button-background-hover-color);
 }
 
@@ -209,12 +220,12 @@ input::placeholder {
   margin: 2px 2px;
   cursor: pointer;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   transition: background-color 0.3s;
   margin-top: 15px
 }
 
-.add-btn:hover, .to_start:hover, .update-btn:hover {
+.add-btn:hover, .to_start:hover, .update-btn:hover, .login-button:hover {
   background-color: var(--main-button-background-hover-color)
 }
 
@@ -232,7 +243,7 @@ input::placeholder {
 .frosty {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(50px);
-  border-radius: 10px;
+  border-radius: var(--border-radius);
 }
 
 .connected-relay {
@@ -261,7 +272,7 @@ input::placeholder {
 }
 
 .button {
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   border: none;
   padding: 10px;
   background-color: transparent;
@@ -289,7 +300,7 @@ input::placeholder {
   margin: 2px 2px;
   cursor: pointer;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   transition: background-color 0.3s;
 }
 
@@ -304,7 +315,7 @@ input::placeholder {
   margin: 2px 2px;
   cursor: pointer;
   padding: 8px 16px;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   transition: background-color 0.3s;
 }
 
@@ -330,7 +341,7 @@ input::placeholder {
   width: 40px;
   border: none;
   background-color: darkgrey;
-  border-radius: 4px;
+  border-radius: var(--border-radius);
   padding: 10px;
 }
 
@@ -369,7 +380,60 @@ input::placeholder {
   height: 40px;
 }
 
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  padding: 0px 20px 0px 20px;
+}
+
+.login-button {
+  width: 100%;
+  height: 40px;
+  border: none;
+  background-color: var(--main-button-background-color);
+  color: var(--second-text-color);
+  border-radius: var(--border-radius);
+  font-size: medium;
+  font-weight: bold;
+}
+
+.login-container > form {
+  width: 100%;
+}
+
+.login-container > form > input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.logout-button {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  height: 40px;
+  width: 40px;
+  border: none;
+  background-color: var(--second-button-background-color);
+  border-radius: var(--border-radius);
+}
+
+.logout-button::after {
+  color: white;
+  font-family: 'Material Icons';
+  content: "\e9ba";
+  font-size: 20px;
+  margin-left: 10px;
+}
+
 @media screen and (min-width: 480px) {
+  .login-container {
+    width: auto;
+  }
   .settings {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -381,6 +445,9 @@ input::placeholder {
 }
 
 @media screen and (min-width: 768px) {
+  .login-container {
+    width: 400px;
+  }
   .settings {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -392,6 +459,9 @@ input::placeholder {
 }
 
 @media screen and (min-width: 1024px) {
+  .login-container {
+    width: 400px;
+  }
   .settings {
     grid-template-columns: repeat(2, 1fr);
   }

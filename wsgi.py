@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import redis, json
+import redis, json, os, base64
 from src.settings import Settings
 from src.utils import Utils
 from flask import Flask, request, jsonify, render_template
@@ -8,10 +8,18 @@ from flask_cors import CORS
 from flask_httpauth import HTTPBasicAuth
 from functools import wraps
 from main import redis_host, r, settings
+from flask_basicauth import BasicAuth
+from dotenv import load_dotenv
+
+load_dotenv()
 
 utils = Utils()
 server = Flask(__name__, static_folder='dashboard/public', template_folder='dashboard/public')
+server.config['BASIC_AUTH_USERNAME'] = os.environ.get('USER_NAME')
+server.config['BASIC_AUTH_PASSWORD'] = os.environ.get('USER_PASSWORD')
 CORS(server)
+
+admin_auth = BasicAuth(server)
 
 auth = HTTPBasicAuth()
 settings = Settings()
@@ -95,8 +103,23 @@ def get_orders():
     orders = [order.decode('utf-8') for order in orders]
     return jsonify({'success':True, 'orders': orders}), 200
 
+@server.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    if not data:
+        return jsonify({'success':False, 'message': 'Invalid request body'}), 400
+
+    encoded = data['token']
+    decoded = base64.b64decode(encoded).decode('utf-8')
+    username = decoded.split(':')[0]
+    password = decoded.split(':')[1]
+    if username != os.environ.get('USER_NAME') or password != os.environ.get('USER_PASSWORD'):
+        return jsonify({'success':False, 'message': 'Invalid username or password'}), 401
+    return jsonify({'success':True}), 200
+
 @server.route('/bot/settings', methods=['GET', 'POST'])
-@localhost_only
+# @localhost_only
+@admin_auth.required
 def handle_settings():
     if request.method == 'GET':
         jsonSettings = json.dumps(settings.get())
@@ -111,6 +134,7 @@ def handle_settings():
 
 @server.route('/bot/start', methods=['POST'])
 # @localhost_only
+@admin_auth.required
 def start():
     ret = settings.has_valid_values()
     if not ret[0]:
@@ -120,12 +144,14 @@ def start():
 
 @server.route('/bot/stop', methods=['POST'])
 # @localhost_only
+@admin_auth.required
 def stop():
     r.publish('stop_bot', '')
     return jsonify({'success':True, 'status': 'STOPPED'}), 200
 
 @server.route('/info', methods=['GET'])
-@localhost_only
+# @localhost_only
+@admin_auth.required
 def info():
     status = r.get('status')
     status = status.decode('utf-8') if status else 'STOPPED'

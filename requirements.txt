@@ -15,6 +15,8 @@ Docker==6.0.1
 Schwifty==2023.2.1
 Python-bitcoinlib==0.12.0
 Flask_cors==3.0.10
+Flask-BasicAuth=0.2.0
+Python-dotenv=1.0.0
 
 Qrcode
 Protobuf>=3.20,<4
