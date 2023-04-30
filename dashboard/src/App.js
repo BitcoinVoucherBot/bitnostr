@@ -382,7 +382,6 @@ class App extends Component {
 
   handleLoginSubmit = (props) => {
     const { username, password } = props;
-    console.log(username, password);
     this.login(username, password);
   }
 
