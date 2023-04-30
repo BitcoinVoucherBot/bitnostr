@@ -430,6 +430,26 @@ input::placeholder {
   margin-left: 10px;
 }
 
+@media screen and (max-width: 375px) and (-webkit-device-pixel-ratio: 3) {
+  h1 {
+    font-size: 25px;
+  }
+  .content {
+    margin: 10px !important;
+  }
+  .login-container {
+    width: auto;
+  }
+  .settings {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .relays-list {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(auto, auto);
+    grid-auto-flow: row;
+  }
+}
+
 @media screen and (min-width: 480px) {
   .login-container {
     width: auto;

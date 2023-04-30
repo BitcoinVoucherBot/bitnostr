@@ -9,6 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      base_url: '',
       settings: null,
       status: 'RUNNING',
       connected: [],
@@ -31,6 +32,8 @@ class App extends Component {
   }
 
   componentDidMount() {
+    const base_url = window.location.href.replace(':3000/', '');
+    this.setState({ base_url: base_url })
     const token = this.getToken();
     if (token) {
       this.setState({ isLogged: true }, () => {
@@ -54,7 +57,7 @@ class App extends Component {
   async login(username, password) {
     const token = btoa(`${username}:${password}`);
     try {
-      const response = await fetch('http://localhost:8080/login', {
+      const response = await fetch(this.state.base_url + ':8080/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token }),
@@ -109,7 +112,7 @@ class App extends Component {
       if (token) {
         const headers = new Headers();
         headers.append('Authorization', `Basic ${token}`);
-        const response = await fetch('http://localhost:8080/bot/settings', { headers });
+        const response = await fetch(this.state.base_url + ':8080/bot/settings', { headers });
 
         if (!response.ok) {
           throw new Error(`Fetch failed with status ${response.status}`)
@@ -145,7 +148,7 @@ class App extends Component {
       if (token) {
         const headers = new Headers();
         headers.append('Authorization', `Basic ${token}`);
-        const response = await fetch('http://localhost:8080/info', { headers });
+        const response = await fetch(this.state.base_url + ':8080/info', { headers });
 
         if (!response.ok) {
           throw new Error(`Fetch failed with status ${response.status}`)
@@ -194,7 +197,7 @@ class App extends Component {
       }
       settings[key].push(input.value)
     })
-    const response = await fetch('http://localhost:8080/bot/settings', {
+    const response = await fetch(this.state.base_url + ':8080/bot/settings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -317,7 +320,7 @@ class App extends Component {
       return;
     }
 
-    const response = await fetch('http://localhost:8080/bot/start', {
+    const response = await fetch(this.state.base_url + ':8080/bot/start', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -353,7 +356,7 @@ class App extends Component {
       return;
     }
 
-    const response = await fetch('http://localhost:8080/bot/stop', {
+    const response = await fetch(this.state.base_url + ':8080/bot/stop', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
