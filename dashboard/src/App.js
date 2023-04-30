@@ -32,7 +32,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const base_url = window.location.href.replace(':3000/', '');
+    let base_url = window.location.href.replace(':3000', '');
+    if (base_url[base_url.length - 1] === '/') {
+      base_url = base_url.slice(0, -1);
+    }
     this.setState({ base_url: base_url })
     const token = this.getToken();
     if (token) {
