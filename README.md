@@ -5,6 +5,7 @@
 Welcome to the BitcoinVoucherBot repository! We're excited to share our user-friendly, privacy-focused tool that simplifies the process of swapping your Bitcoin. Built on the innovative [Nostr](https://github.com/nostr-protocol/nostr) protocol, our bot offers an exceptional experience while keeping your transactions secure.
 
 ## 🌟 Key Features
+
 - Intuitive commands for a seamless user experience.
 - Push Sats to your Lightning Address or swap Bitcoin to your on-chain address.
 - Detailed step-by-step guidance throughout the swapping process.
@@ -15,9 +16,9 @@ Welcome to the BitcoinVoucherBot repository! We're excited to share our user-fri
 
 In order to run this container you'll need docker installed.
 
-* [Windows](https://docs.docker.com/windows/started)
-* [OSX](https://docs.docker.com/mac/started/)
-* [Linux](https://docs.docker.com/linux/started/)
+- [Windows](https://docs.docker.com/windows/started)
+- [OSX](https://docs.docker.com/mac/started/)
+- [Linux](https://docs.docker.com/linux/started/)
 
 ## 👨‍💻 Usage
 
@@ -46,16 +47,15 @@ git clone https://github.com/BitcoinVoucherBot/bitnostr.git
 cd bitnostr
 ```
 
-3. Rename ```settings.tpl.json``` into ```settings.json```:
+3. Rename ```.env.tpl``` into ```.env```:
 
 ```bash
-mv settings.tpl.json settings.json
+mv .env.tpl .env
 ```
-4. Fill missing required fields:
-    * ```nostr_private_key```: Your Nostr bot private key
-    * ```nostr_public_key```: Your Nostr bot public key
-    * ```bvb_api_key```: Your BitcoinVoucherBot API key 
-    * ```bot_api_key```: Your Bot API key
+
+4. Fill missing required fields required to access dashboard:
+    - ```<YOUR_USER_NAME>```: Your admin bot username
+    - ```<YOUR_USER_PASSWORD>```: Your admin bot password
 
 5. Run the docker compose
 
@@ -63,19 +63,32 @@ mv settings.tpl.json settings.json
 docker compose up -d --build
 ```
 
+6. Go to the dashboard
+    - [http://localhost:8080](http://localhost:8080) (if you run it locally)
+    - [http://<YOUR_IP>:8080](http://<YOUR_IP>:8080) (if you run it on your VPS)
+
+7. Login to the dashboard using username and password you set in step 4
+
+
+8. Edit Settings filling missing values.
+
+
+9. Start the bot from the dashboard
+
+
 ## 🔍 Implemented NIPs (Nostr Implementation Possibilities)
 
-* [NIP-01: Basic protocol flow description](https://github.com/nostr-protocol/nips/blob/master/01.md)
-* [NIP-04: Encrypted Direct Message](https://github.com/nostr-protocol/nips/blob/master/04.md)
-* [NIP-05: Mapping Nostr keys to DNS-based internet identifiers](https://github.com/nostr-protocol/nips/blob/master/05.md)
+- [NIP-01: Basic protocol flow description](https://github.com/nostr-protocol/nips/blob/master/01.md)
+- [NIP-04: Encrypted Direct Message](https://github.com/nostr-protocol/nips/blob/master/04.md)
+- [NIP-05: Mapping Nostr keys to DNS-based internet identifiers](https://github.com/nostr-protocol/nips/blob/master/05.md)
 
 ## ✅ Tested clients
 
-* [Snort](https://snort.social)
-* [Iris](https://iris.to)
-* [Coracle](https://coracle.social)
-* [Damus (iOS)](https://damus.io)
-* [Amethyst (Android)](https://play.google.com/store/apps/details?id=com.vitorpamplona.amethyst)
+- [Snort](https://snort.social)
+- [Iris](https://iris.to)
+- [Coracle](https://coracle.social)
+- [Damus (iOS)](https://damus.io)
+- [Amethyst (Android)](https://play.google.com/store/apps/details?id=com.vitorpamplona.amethyst)
 
 ## 📖 USER GUIDE
 
@@ -89,8 +102,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 This Bot running on Nostr protocol which is in an early stage of development.
 
-* It might have some bugs.
-* Still beta.
+- It might have some bugs.
+- Still beta.
 
 We welcome your feedback and suggestions! If you have any questions or need assistance, please feel free to create an issue, add PRs, or provide any feedback!
 
@@ -98,4 +111,3 @@ We welcome your feedback and suggestions! If you have any questions or need assi
 
 [albi ⚡️](https://snort.social/p/npub1zy79gha2cfztu0use9qyu6cfp0h3kjr9sxdu6svurkdm68w2xzfqh7h3k3) - npub1zy79gha2cfztu0use9qyu6cfp0h3kjr9sxdu6svurkdm68w2xzfqh7h3k3</br>
 [massmux](https://snort.social/p/npub1sej07d37lnfk592wlh9uv2dy68jv2y0ez98p6dw7w0llx89hswesvs5fqm) - npub1sej07d37lnfk592wlh9uv2dy68jv2y0ez98p6dw7w0llx89hswesvs5fqm
-
