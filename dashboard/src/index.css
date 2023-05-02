@@ -325,7 +325,7 @@ input::placeholder {
 
 .input-list-content {
   flex-grow: 1; /* Allow the first div to grow and take up the remaining space */
-  padding: 10px;
+  /* padding: 10px; */
   text-align: center;
 }
 
@@ -398,9 +398,10 @@ input::placeholder {
   border-radius: var(--border-radius);
   font-size: medium;
   font-weight: bold;
+  margin-top: 10px;
 }
 
-.login-container > form {
+.login-container form {
   width: 100%;
 }
 

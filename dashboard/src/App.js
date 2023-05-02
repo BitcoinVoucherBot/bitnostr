@@ -9,6 +9,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
+      password: '',
       base_url: '',
       settings: null,
       status: 'RUNNING',
@@ -386,13 +388,21 @@ class App extends Component {
     return false;
   }
 
-  handleLoginSubmit = (props) => {
-    const { username, password } = props;
+  handlePasswordChange = (value) => {
+    this.setState({ password: value });
+  }
+
+  handleUsernameChange = (value) => {
+    this.setState({ username: value });
+  }
+
+  handleLoginSubmit = () => {
+    const { username, password } = this.state;
     this.login(username, password);
   }
 
   render() {
-    const { settings, status, editable, loading, secureInput, isLogged } = this.state;
+    const { settings, status, editable, loading, secureInput, isLogged, username, password } = this.state;
     return (
       <div className="container">
          <div className="background-image"></div>
@@ -406,6 +416,13 @@ class App extends Component {
           </div>
           { !isLogged ? (
             <LoginComponent 
+              k='login'
+              username={username}
+              password={password}
+              secureInput={secureInput}
+              handlePasswordChange={(e) => this.handlePasswordChange(e)}
+              handleUsernameChange={(e) => this.handleUsernameChange(e)}
+              toggleSecureInput={(e) => this.toggleSecureInput(e)}
               handleLoginSubmit={(e) => this.handleLoginSubmit(e)}
             />
           ) : (
