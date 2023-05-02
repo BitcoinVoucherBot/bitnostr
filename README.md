@@ -57,23 +57,30 @@ mv .env.tpl .env
     - ```<YOUR_USER_NAME>```: Your admin bot username
     - ```<YOUR_USER_PASSWORD>```: Your admin bot password
 
-5. Run the docker compose
+
+5. Rename ```settings.tpl.json``` into ```settings.json```:
+
+```bash
+mv settings.tpl.json settings.json
+```
+
+6. Run the docker compose
 
 ```bash
 docker compose up -d --build
 ```
 
-6. Go to the dashboard
+7. Go to the dashboard
     - [http://localhost](http://localhost) (if you run it locally)
     - [http://<YOUR_IP>](http://<YOUR_IP>) (if you run it on your VPS)
 
-7. Login to the dashboard using username and password you set in step 4
+8. Login to the dashboard using username and password you set in step 4
 
 
-8. Edit Settings filling missing values.
+9. Edit Settings filling missing values.
 
 
-9. Start the bot from the dashboard
+10. Start the bot from the dashboard
 
 
 ## 🔍 Implemented NIPs (Nostr Implementation Possibilities)
