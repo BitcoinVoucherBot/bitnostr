@@ -64,8 +64,8 @@ docker compose up -d --build
 ```
 
 6. Go to the dashboard
-    - [http://localhost:8080](http://localhost:8080) (if you run it locally)
-    - [http://<YOUR_IP>:8080](http://<YOUR_IP>:8080) (if you run it on your VPS)
+    - [http://localhost](http://localhost) (if you run it locally)
+    - [http://<YOUR_IP>](http://<YOUR_IP>) (if you run it on your VPS)
 
 7. Login to the dashboard using username and password you set in step 4
 
