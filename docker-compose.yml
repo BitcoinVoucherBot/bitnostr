@@ -1,20 +1,20 @@
 version: '3.4'
 
 services:
-  bitcoinvoucherbot:
+  bitnostr:
     environment: 
       - production
-    image: bitcoinvoucherbot
-    container_name: bitcoinvoucherbot
+    image: bitcoinvoucherbot/bitnostr
+    container_name: bitnostr
     volumes:
       - ${PWD}/settings.json:/app/settings.json
     networks:
       - app
     depends_on:
       - flask
-    build:
-      context: .
-      dockerfile: ./Dockerfile.bot
+        #build:
+        #context: .
+        #dockerfile: ./Dockerfile.bot
     links:
       - redis
     restart: on-failure
