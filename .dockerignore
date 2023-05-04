@@ -27,3 +27,6 @@ LICENSE
 README.md
 **/libsecp256k1.so.0
 libsecp256k1.0.dylib
+settings.json
+**/data
+**/redisconf
