@@ -38,6 +38,8 @@ services:
         - production
     image: flask
     container_name: flask
+    volumes:
+      - ${PWD}/settings.json:/app/settings.json
     ports:
       - 8080:8080
     networks:
