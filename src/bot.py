@@ -435,9 +435,10 @@ class Bot(NostrCoreBot):
                 self.show_purchase_on_chain(event, command, fee)
         
         def show_purchase_lightning(self, event, command, fee):
-            message = f"Service description\n\nService: ⚡️ Push to your Lighting Address\nType: Push to your Lighting Address\nService Fee: {fee} %"
+            message = f"⚠️ Important. Due to exceptionally high Bitcoin onchain mining fees rate and high congestion of the mempool\n\nSome of our service has been paused until the mining fees are so high. You can make swap eur/bitcoin."
+            # message = f"Service description\n\nService: ⚡️ Push to your Lighting Address\nType: Push to your Lighting Address\nService Fee: {fee} %"
             self.send_message(recipient_pubkey=event.public_key, cleartext_content=message)
-            self.show_tiers(event, command, order_type=OrderType.LIGHTNING)
+            # self.show_tiers(event, command, order_type=OrderType.LIGHTNING)
         
         # ON_CHAIN
         def show_purchase_on_chain(self, event, command, fee):
