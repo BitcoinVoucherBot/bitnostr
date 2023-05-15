@@ -42,6 +42,7 @@ services:
     container_name: flask
     volumes:
       - ${PWD}/settings.json:/app/settings.json
+      - ${PWD}/.env:/app/.env
     ports:
       - 8080:8080
     networks:
@@ -56,9 +57,6 @@ services:
       options:
         max-size: "50m"
         max-file: "3"
-    volumes:
-      - ${PWD}/settings.json:/app/settings.json
-      - ${PWD}/.env:/app/.env
 
   dashboard:
     container_name: dashboard
